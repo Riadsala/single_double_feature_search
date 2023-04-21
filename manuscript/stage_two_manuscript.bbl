@@ -1,4 +1,4 @@
-\begin{thebibliography}{58}
+\begin{thebibliography}{64}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -51,12 +51,21 @@ Kyle~R Cave and Jeremy~M Wolfe.
 \newblock \emph{Cognitive psychology}, 22\penalty0 (2):\penalty0 225--271,
   1990.
 
-\bibitem[Clarke et~al.(2020)Clarke, Irons, James, Leber, and
-  Hunt]{clarke2020stable}
-Alasdair~DF Clarke, JL~Irons, Warren James, Andrew~B Leber, and Amelia~R Hunt.
+\bibitem[Clarke et~al.(2022{\natexlab{a}})Clarke, Irons, James, Leber, and
+  Hunt]{clarke2022stable}
+Alasdair~DF Clarke, Jessica~L Irons, Warren James, Andrew~B Leber, and Amelia~R
+  Hunt.
 \newblock Stable individual differences in strategies within, but not between,
   visual search tasks.
-\newblock \emph{Quarterly Journal of Experimental Psychology}, 2020.
+\newblock \emph{Quarterly Journal of Experimental Psychology}, 75\penalty0
+  (2):\penalty0 289--296, 2022{\natexlab{a}}.
+
+\bibitem[Clarke et~al.(2022{\natexlab{b}})Clarke, Nowakowska, and
+  Hunt]{clarke2022visual}
+Alasdair~DF Clarke, Anna Nowakowska, and Amelia~R Hunt.
+\newblock Visual search habits and the spatial structure of scenes.
+\newblock \emph{Attention, Perception, \& Psychophysics}, 84\penalty0
+  (6):\penalty0 1874--1885, 2022{\natexlab{b}}.
 
 \bibitem[Corbett and Smith(2020)]{corbett2020diffusion}
 Elaine~A Corbett and Philip~L Smith.
@@ -80,6 +89,13 @@ Andrew Gelman and Jennifer Hill.
 \newblock \emph{Data analysis using regression and multilevel/hierarchical
   models}.
 \newblock Cambridge university press, 2006.
+
+\bibitem[Guest and Martin(2021)]{guest2021computational}
+Olivia Guest and Andrea~E Martin.
+\newblock How computational modeling can force theory building in psychological
+  science.
+\newblock \emph{Perspectives on Psychological Science}, 16\penalty0
+  (4):\penalty0 789--802, 2021.
 
 \bibitem[Hughes et~al.(2016)Hughes, Southwell, Gilchrist, and
   Tolhurst]{hughes2016quantifying}
@@ -158,6 +174,13 @@ Joseph Krummenacher and Hermann~J M{\"u}ller.
 \newblock Dynamic weighting of feature dimensions in visual search: behavioral
   and psychophysiological evidence.
 \newblock \emph{Frontiers in psychology}, 3:\penalty0 221, 2012.
+
+\bibitem[Li et~al.(2022)Li, McKinney, Irons, and Leber]{li2022assessing}
+Walden~Y Li, Molly~R McKinney, Jessica~L Irons, and Andrew~B Leber.
+\newblock Assessing the generality of strategy optimization across distinct
+  attentional tasks.
+\newblock \emph{Journal of Experimental Psychology: Human Perception and
+  Performance}, 48\penalty0 (6):\penalty0 582, 2022.
 
 \bibitem[Liesefeld and M{\"u}ller(2020)]{liesefeld2020theoretical}
 Heinrich~Ren{\'e} Liesefeld and Hermann~J M{\"u}ller.
@@ -238,6 +261,17 @@ J~Toby Mordkoff and Steven Yantis.
 \newblock \emph{Journal of Experimental Psychology: Human Perception and
   Performance}, 17\penalty0 (2):\penalty0 520, 1991.
 
+\bibitem[Moshontz et~al.(2018)Moshontz, Campbell, Ebersole, IJzerman, Urry,
+  Forscher, Grahe, McCarthy, Musser, Antfolk,
+  et~al.]{moshontz2018psychological}
+Hannah Moshontz, Lorne Campbell, Charles~R Ebersole, Hans IJzerman, Heather~L
+  Urry, Patrick~S Forscher, Jon~E Grahe, Randy~J McCarthy, Erica~D Musser, Jan
+  Antfolk, et~al.
+\newblock The psychological science accelerator: Advancing psychology through a
+  distributed collaborative network.
+\newblock \emph{Advances in Methods and Practices in Psychological Science},
+  1\penalty0 (4):\penalty0 501--515, 2018.
+
 \bibitem[Ng et~al.(2020)Ng, Buetti, Patel, and Lleras]{ng2020prioritization}
 Gavin~JP Ng, Simona Buetti, Trisha~N Patel, and Alejandro Lleras.
 \newblock Prioritization in visual attention does not work the way you think it
@@ -258,6 +292,11 @@ Anna Nowakowska, Alasdair~DF Clarke, and Amelia~R Hunt.
 \newblock Human visual search behaviour is far from ideal.
 \newblock \emph{Proceedings of the Royal Society B: Biological Sciences},
   284\penalty0 (1849):\penalty0 20162767, 2017.
+
+\bibitem[Oberauer and Lewandowsky(2019)]{oberauer2019addressing}
+Klaus Oberauer and Stephan Lewandowsky.
+\newblock Addressing the theory crisis in psychology.
+\newblock \emph{Psychonomic bulletin \& review}, 26:\penalty0 1596--1618, 2019.
 
 \bibitem[Osborne(2002)]{osborne2002notes}
 Jason Osborne.
@@ -330,6 +369,12 @@ Anne Treisman and Stephen Gormican.
 Anne~M Treisman and Garry Gelade.
 \newblock A feature-integration theory of attention.
 \newblock \emph{Cognitive psychology}, 12\penalty0 (1):\penalty0 97--136, 1980.
+
+\bibitem[Utochkin(2013)]{utochkin2013visual}
+Igor~S Utochkin.
+\newblock Visual search with negative slopes: The statistical power of
+  numerosity guides attention.
+\newblock \emph{Journal of vision}, 13\penalty0 (3):\penalty0 18--18, 2013.
 
 \bibitem[Wang et~al.(2017)Wang, Buetti, and Lleras]{wang2017predicting}
 Zhiyuan Wang, Simona Buetti, and Alejandro Lleras.
