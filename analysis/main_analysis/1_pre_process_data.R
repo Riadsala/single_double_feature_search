@@ -11,7 +11,7 @@ source("../scripts/our_functions.R")
 set.seed(100320021)
 
 
-d <- read_csv("../../data/cortex_data_31_01/accuracy_rt_data.txt", show_col_types = F) %>%
+d <- read_csv("../../data/main/accuracy_rt_data.txt", show_col_types = F) %>%
   filter(!is.na(rt)) %>%
   mutate(
          colour = as_factor(feature),
@@ -87,7 +87,7 @@ d %>% mutate(exp = parse_number(experiment)) %>%
 
 
 # read in stimuli info to get target ring
-dstim <- readxl::read_excel("../../psychopy_expt/searchDiscPavlovia/image_stimuli_final_master.xlsx") %>%
+dstim <- readxl::read_excel("../../experiment/image_stimuli_final_master.xlsx") %>%
   select(image = "ImageFile", x = "target_pos_x", y = "target_pos_y") 
 
 

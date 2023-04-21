@@ -116,7 +116,7 @@ samples1b %>% mutate(feature_type = if_else(
 
 Test whether using a shifted-lognormal distribution gives a better model than a lognormal or normal.
 
-```{r hypothesis-1, cache=TRUE}
+```{r hypothesis-1, cache=TRUE, message = FALSE}
 m_sft <- readRDS("exp1.model")
 m_nrl <- readRDS("exp1_normal.model")
 m_log <- readRDS("exp1_lognormal.model")
@@ -161,7 +161,7 @@ d1 %>% modelr::data_grid(feature, lnd= seq(-1, 4, length.out = 25)) %>%
   facet_wrap(~feature, nrow = 1) +
   scale_x_continuous("log(number of distractors)")-> d1_sft_paper
 
-ggsave("../../plots/sft_ln_model.pdf", d1_sft_paper, width = 8, height = 2)
+#ggsave("../../plots/sft_ln_model.pdf", d1_sft_paper, width = 8, height = 2)
 
 ```
 
@@ -169,7 +169,7 @@ ggsave("../../plots/sft_ln_model.pdf", d1_sft_paper, width = 8, height = 2)
 
 Here, we want to verify that using log(number of distractors) in our model is superior to n(distractors).
 
-```{r hypothesis-2, cache=TRUE, echo = FALSE}
+```{r hypothesis-2, cache=TRUE, echo = FALSE, message = FALSE}
 
 hyp_2_table <- read_csv('model_comp_hyp2.csv')
 knitr::kable(hyp_2_table) %>%
@@ -264,7 +264,7 @@ slopes %>%
                parse = TRUE, size = 2.5, label.y = 0.99, coef.digits = 3, rr.digits = 4) + 
   facet_wrap(~method, scales = "free") 
 
-ggsave("../../plots/Dpe.pdf", width = 7, height = 3)
+#ggsave("../../plots/Dpe.pdf", width = 7, height = 3)
 
 ``` 
 
@@ -404,12 +404,13 @@ All three models receive approximately the same predictive weight, meaning that 
 
 ## New, Improved (Unregistered) Method
 
-For reasons explained in the manuscript...
+See main manuscript for discussion of why we believe this method gives more meaningful results.
 
 
 First, read in data and models again: 
+
 ```{r}
-source("pred_rt_functions.R")
+source("../scripts/pred_rt_functions.R")
 source("1_pre_process_data.R")
 
 d1 %>% mutate(observer = as.numeric(observer)) %>%
@@ -424,9 +425,9 @@ m1 <- readRDS("exp1.model")
 m2 <- readRDS("exp2_random.model") 
 ```
 
-now merge
+Now merge:
 
-```{r get_rt_models, cache=TRUE}
+```{r get_rt_models, cache=TRUE, message = FALSE}
 ndraws <- 100
 
 model1 <- get_rt_model_simple(m1)
@@ -477,7 +478,7 @@ dp <- map_df(1:ndraws, make_pred)
 
 ### Absolute Error
 
-```{r}
+```{r, message = FALSE}
 
 dp %>% 
   select(.draw, method, feature, lnd, rt, p_mu_rt, loglik) %>%
