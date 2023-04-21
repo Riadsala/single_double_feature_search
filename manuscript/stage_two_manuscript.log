@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  21 APR 2023 12:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  21 APR 2023 14:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -578,7 +578,7 @@ LaTeX Warning: Float too large for page by 63.88464pt on input line 94.
 
 pdfTeX warning: pdflatex (file ../plots/example_stimuli_figure.pdf): PDF inclus
 ion: found PDF version <1.7>, but at most version <1.5> allowed
-<../plots/example_stimuli_figure.pdf, id=403, 963.6pt x 542.025pt>
+<../plots/example_stimuli_figure.pdf, id=407, 963.6pt x 542.025pt>
 File: ../plots/example_stimuli_figure.pdf Graphic file (type pdf)
 <use ../plots/example_stimuli_figure.pdf>
 Package pdftex.def Info: ../plots/example_stimuli_figure.pdf  used on input lin
@@ -618,7 +618,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 146.
 
 [9]
-<../plots/computational_replication.pdf, id=457, 578.16pt x 216.81pt>
+<../plots/computational_replication.pdf, id=461, 578.16pt x 216.81pt>
 File: ../plots/computational_replication.pdf Graphic file (type pdf)
 <use ../plots/computational_replication.pdf>
 Package pdftex.def Info: ../plots/computational_replication.pdf  used on input 
@@ -659,67 +659,74 @@ Underfull \hbox (badness 10000) in paragraph at lines 214--215
  []
 
 [13] [14]
-<../plots/n_trials.pdf, id=544, 578.16pt x 216.81pt>
+<../plots/n_trials.pdf, id=548, 578.16pt x 216.81pt>
 File: ../plots/n_trials.pdf Graphic file (type pdf)
 <use ../plots/n_trials.pdf>
 Package pdftex.def Info: ../plots/n_trials.pdf  used on input line 243.
 (pdftex.def)             Requested size: 390.0pt x 146.24779pt.
- [15 <../plots/n_trials.pdf>] [16] [17]
+ [15 <../plots/n_trials.pdf>] [16]
+Overfull \hbox (0.58722pt too wide) in paragraph at lines 279--280
+[]\OT1/ptm/m/n/12 The orig-i-nal Stage 1 reg-is-tered re-port for this manuscri
+pt is avail-able at []$\OT1/cmtt/m/n/12 https :
+ []
+
+[17]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 304.
+(hyperref)                removing `math shift' on input line 308.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 304.
+(hyperref)                removing `subscript' on input line 308.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 304.
+(hyperref)                removing `math shift' on input line 308.
 
-<../plots/Dpe.pdf, id=598, 505.89pt x 216.81pt>
+[18]
+<../plots/Dpe.pdf, id=614, 505.89pt x 216.81pt>
 File: ../plots/Dpe.pdf Graphic file (type pdf)
 <use ../plots/Dpe.pdf>
-Package pdftex.def Info: ../plots/Dpe.pdf  used on input line 331.
+Package pdftex.def Info: ../plots/Dpe.pdf  used on input line 335.
 (pdftex.def)             Requested size: 390.0pt x 167.14601pt.
-[18] [19 <../plots/Dpe.pdf>] [20]
-<../plots/single_feature_correlations.pdf, id=632, 505.89pt x 180.675pt>
+ [19 <../plots/Dpe.pdf>] [20]
+<../plots/single_feature_correlations.pdf, id=642, 505.89pt x 180.675pt>
 File: ../plots/single_feature_correlations.pdf Graphic file (type pdf)
 <use ../plots/single_feature_correlations.pdf>
 Package pdftex.def Info: ../plots/single_feature_correlations.pdf  used on inpu
-t line 379.
+t line 383.
 (pdftex.def)             Requested size: 390.0pt x 139.28833pt.
  [21 <../plots/single_feature_correlations.pdf>]
-<../plots/ring_single_feature.pdf, id=653, 505.89pt x 216.81pt>
+<../plots/ring_single_feature.pdf, id=663, 505.89pt x 216.81pt>
 File: ../plots/ring_single_feature.pdf Graphic file (type pdf)
 <use ../plots/ring_single_feature.pdf>
 Package pdftex.def Info: ../plots/ring_single_feature.pdf  used on input line 4
-00.
+04.
 (pdftex.def)             Requested size: 390.0pt x 167.14601pt.
  [22 <../plots/ring_single_feature.pdf>] [23] [24]
-Overfull \hbox (3.38474pt too wide) in paragraph at lines 448--449
+Overfull \hbox (3.38474pt too wide) in paragraph at lines 452--453
 []\OT1/ptm/m/n/12 CHECK ALL THIS> AL THINKS THAT THIER ORIG DATA + OUR ANAL-
  []
 
 [25]
-Overfull \hbox (5.98071pt too wide) in paragraph at lines 454--455
+Overfull \hbox (5.98071pt too wide) in paragraph at lines 458--459
 []\OT1/ptm/m/n/12 Another pos-si-bil-ity is that be-cause some par-tic-i-pants 
 had neg-a-tive search slopes,
  []
 
 
-Overfull \hbox (4.8892pt too wide) in paragraph at lines 460--461
+Overfull \hbox (4.8892pt too wide) in paragraph at lines 464--465
 []\OT1/ptm/m/n/12 Our (planned) ex-ploratory anal-y-sis of the in-di-vid-ual di
 f-fer-ences in search slopes
  []
 
 [26] [27]
-Underfull \hbox (badness 10000) in paragraph at lines 475--477
+Underfull \hbox (badness 10000) in paragraph at lines 479--481
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 477--479
+Underfull \hbox (badness 10000) in paragraph at lines 481--483
 
  []
 
@@ -731,13 +738,13 @@ Jz-er-man,
 
 [32] [33] [34]) [35] (stage_two_manuscript.aux)
 Package rerunfilecheck Info: File `stage_two_manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: A607BB5AAE3AF1907866295C8339F8BC;7756.
+(rerunfilecheck)             Checksum: 27EFA552D9E2407A59A161482B4CB0AC;7902.
  ) 
 Here is how much of TeX's memory you used:
- 11634 strings out of 475389
- 185726 string characters out of 2774134
+ 11636 strings out of 475389
+ 185756 string characters out of 2774134
  530086 words of memory out of 3000000
- 32646 multiletter control sequences out of 15000+600000
+ 32647 multiletter control sequences out of 15000+600000
  510375 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  72i,10n,77p,1944b,684s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -754,9 +761,9 @@ AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 1/urw/times/utmb8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on stage_two_manuscript.pdf (35 pages, 1428555 bytes).
+Output written on stage_two_manuscript.pdf (35 pages, 1430744 bytes).
 PDF statistics:
- 902 PDF objects out of 1000 (max. 8388607)
- 174 named destinations out of 1000 (max. 500000)
- 351 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 913 PDF objects out of 1000 (max. 8388607)
+ 175 named destinations out of 1000 (max. 500000)
+ 359 words of extra memory for PDF output out of 10000 (max. 10000000)
 
