@@ -1,5 +1,5 @@
 ---
-title: "4 Planned Explorations"
+title: "Supplementary Materials: Planned Explorations"
 author: "Alasdair D.F. Clarke and Anna E. Hughes"
 date: "2023-03-24"
 output: bookdown::html_document2
@@ -333,7 +333,7 @@ ggplot(pred, aes(x = lnd, y = .epred, colour = ring, group = .draw)) +
 
 ``` {r include = FALSE}
 
-ggsave("../../plots/ring_single_feature.pdf", width = 7, height = 3)
+#ggsave("../../plots/ring_single_feature.pdf", width = 7, height = 3)
 
 ```
 
@@ -404,13 +404,15 @@ slopes %>%
   #              aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
   #              parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4, colour="blue") + 
   facet_wrap(~method, scales = "free") +
-  ggthemes::scale_color_ptol("target ring")
+  ggthemes::scale_color_ptol("target ring") -> target_ring_D_pred
+
+target_ring_D_pred
 
 ```
 
 ``` {r include = FALSE}
 
-ggsave("../../plots/target_ring_D_pred.pdf",  width = 8, height = 3)
+#ggsave("../../plots/target_ring_D_pred.pdf",  width = 8, height = 3)
 
 ```
 
@@ -460,7 +462,7 @@ rm(post, pred, ring_table, samples1, samples2, slopes, things_to_calc)
 
 First, read in data and models again: 
 ```{r}
-source("pred_rt_functions.R")
+source("../scripts/pred_rt_functions.R")
 source("1_pre_process_data.R")
 
 d1 %>% mutate(observer = as.numeric(observer)) %>%
