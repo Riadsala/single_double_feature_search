@@ -229,7 +229,7 @@ pltDcs
 
 ```{r hypothesis-3-plot-for-paper, include = FALSE}
 
-ggsave("../../plots/Dcs.pdf", pltDi + pltDcs + plot_layout(widths = c(3,4)), width = 8, height = 2)
+#ggsave("../../plots/Dcs.pdf", pltDi + pltDcs + plot_layout(widths = c(3,4)), width = 8, height = 2)
 
 
 ```
@@ -264,7 +264,7 @@ slopes %>%
                parse = TRUE, size = 2.5, label.y = 0.99, coef.digits = 3, rr.digits = 4) + 
   facet_wrap(~method, scales = "free") 
 
-#ggsave("../../plots/Dpe.pdf", width = 7, height = 3)
+ggsave("../../plots/Dpe.pdf", width = 7, height = 3)
 
 ``` 
 
