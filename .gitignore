@@ -1,0 +1,4 @@
+analysis/*/*_files
+analysis/*/*_cache
+*.model
+*.Rhistory
