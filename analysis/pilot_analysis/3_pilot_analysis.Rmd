@@ -28,7 +28,7 @@ library(bridgesampling)
 
 ```{r}
 # set ggplot2 theme
-theme_set(see::theme_abyss())
+theme_set(ggthemes::theme_tufte())
 
 # use parallel cores for mcmc chains!
 options(mc.cores = parallel::detectCores())
@@ -136,27 +136,27 @@ d1 %>% modelr::data_grid(feature, lnd) %>%
   add_predicted_draws(m_sft, re_formula = NA) %>%
   mean_hdci(.width = c(0.53, 0.97)) %>%
   ggplot(aes(lnd)) +
-  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill = "pink") + 
-  geom_jitter(data = d1, aes(y = rt), colour = "white", alpha = 0.1) + 
-  geom_point(data = d_mean, aes(y = mean_median), alpha = 1, colour = "yellow") + 
+  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill =  "#785EF0") + 
+  geom_jitter(data = d1, aes(y = rt), colour = "#DC267F", alpha = 0.1) + 
+  geom_point(data = d_mean, aes(y = mean_median), alpha = 1, colour = "#648FFF") + 
   facet_wrap(~feature, nrow = 1) -> d1_sft
 
 d1 %>% modelr::data_grid(feature, lnd) %>%
   add_predicted_draws(m_log, re_formula = NA) %>%
   mean_hdci(.width = c(0.53, 0.97)) %>%
   ggplot(aes(lnd)) +
-  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill = "pink") + 
-  geom_jitter(data = d1, aes(y = rt), colour = "white", alpha = 0.1) + 
-  geom_point(data = d_mean, aes(y = mean_median), alpha = 1, colour = "yellow") + 
+  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill = "#785EF0") + 
+  geom_jitter(data = d1, aes(y = rt), colour = "#DC267F", alpha = 0.1) + 
+  geom_point(data = d_mean, aes(y = mean_median), alpha = 1, colour = "#648FFF") + 
   facet_wrap(~feature, nrow = 1) -> d1_log
 
 d1 %>% modelr::data_grid(feature, lnd) %>%
   add_predicted_draws(m_nrl, re_formula = NA) %>%
   mean_hdci(.width = c(0.53, 0.97)) %>%
   ggplot(aes(lnd)) +
-  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill = "pink") + 
-  geom_jitter(data = d1, aes(y = rt), colour = "white", alpha = 0.1) + 
-  geom_point(data = d_mean, aes(y = mean_median), alpha = 1, colour = "yellow") + 
+  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill = "#785EF0") + 
+  geom_jitter(data = d1, aes(y = rt), colour = "#DC267F", alpha = 0.1) + 
+  geom_point(data = d_mean, aes(y = mean_median), alpha = 1, colour = "#648FFF") + 
   facet_wrap(~feature, nrow = 1) -> d1_nrl
 
 d1_sft / d1_log / d1_nrl
@@ -264,15 +264,15 @@ slopes %>%
   separate(Dp, into = c("Dp", "Dp_min", "Dp_max"), sep = "_", convert=  TRUE) %>%
   ggplot(aes(x = Dp, xmin = Dp_min, xmax = Dp_max, y = De, ymin = De_min, ymax = De_max)) + 
   geom_point() + 
-  geom_errorbar(alpha = 0.5, colour = "yellow") + 
-  geom_errorbarh(alpha = 0.5, colour = "yellow") + 
-  geom_abline(linetype = 2) + 
-  geom_smooth(method = "lm", fullrange  = T, colour = "violetred3") + 
+  geom_errorbar(alpha = 0.5, colour = "#648FFF") + 
+  geom_errorbarh(alpha = 0.5, colour = "#648FFF") + 
+  geom_abline(linetype = 2, colour = "#785EF0") + 
+  geom_smooth(method = "lm", fullrange  = T, colour = "#DC267F") + 
       stat_poly_eq(formula = y ~ x, 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
-               parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4, colour="yellow1") +
+               parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4, colour="#648FFF") +
   facet_wrap(~method, scales = "free") +
-  scale_colour_manual(values = c("yellow1", "yellow1", "yellow1"))
+  scale_colour_manual(values = c("#648FFF", "#648FFF", "#648FFF"))
 ```
 
 Calculate mean absolute prediction error:
@@ -382,8 +382,8 @@ d2 %>% modelr::data_grid(feature, lnd) %>%
   add_predicted_draws(m_col, re_formula = NA) %>%
   mean_hdci(.width = c(0.53, 0.97)) %>%
   ggplot(aes(lnd)) +
-  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill = "pink") + 
-  geom_jitter(data = d2, aes(y = rt), colour = "white", alpha = 0.1) + 
+  geom_ribbon(aes(ymin = .lower, ymax = .upper, group = .width), alpha = 0.3, fill = "#785EF0") + 
+  geom_jitter(data = d2, aes(y = rt), colour = "#DC267F", alpha = 0.1) + 
   facet_wrap(~feature, nrow = 3)
 
 m_bfe <- compute_rt_predictions(slopes, "best feature")
