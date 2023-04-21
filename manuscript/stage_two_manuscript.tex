@@ -393,7 +393,7 @@ Given these results, it is perhaps unsurprising that our analysis for Hypothesis
 
 \subsection{Target Eccentricity}
 
-It is well known that there are eccentricity effects in visual search, with reaction times being longer for targets that are further away from fixation \citep{carrasco1995eccentricity}. To investigate this in our dataset, we will use the same methods as above (fitting a multi-level shifted-lognormal model) but now including an additional factor that represents how far the target was from the fixation cross. This is coded as a three-level categorical factor representing which ring contained the target (see stimulus details, above). Allowing for interactions with the \textit{feature} and $\log{N_T}$ increases the number of fixed effect parameters in the model from XX to XX. 
+It is well known that there are eccentricity effects in visual search, with reaction times being longer for targets that are further away from fixation \citep{carrasco1995eccentricity}. To investigate this in our dataset, we will use the same methods as above (fitting a multi-level shifted-lognormal model) but now including an additional factor that represents how far the target was from the fixation cross. This is coded as a three-level categorical factor representing which ring contained the target (see stimulus details, above). Allowing for interactions with the \textit{feature} and $\log{N_T}$ increases the number of fixed effect parameters in the model from 8 to 22. 
 
 \begin{equation}
 y \sim 0 + r + r:f:\log(N_T) + (1|id)
