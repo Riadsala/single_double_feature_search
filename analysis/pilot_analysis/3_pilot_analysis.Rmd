@@ -90,10 +90,10 @@ We can see that the priors chosen for our models centre the estimates of $D$ aro
 
 m1b <- readRDS("pilot1_prior.model")
 
-source("get_slopes_fun.R")
+source("../scripts/our_functions.R")
 
 
-samples1b <- get_slopes(m1b, 1) %>% select(-observer, -rD) %>% distinct()
+samples1b <- get_slopes_pilot(m1b, 1) %>% select(-observer, -rD) %>% distinct()
 
 
 colourPalette <- c("#e78429", "#ed968c", "#7c4b73","#aadce0", "#72bcd5", "528fad")
@@ -189,10 +189,9 @@ Can we predict $D$ in the double-feature case from data in the single-feature ca
 Which method has the lowest mean absolute prediction error?
 
 ```{r, message = FALSE, warning = FALSE, fig.cap = "Predicting the group average D."}
-source("get_slopes_fun.R")
 
 m1 <- readRDS("pilot1.model")
-samples1 <- get_slopes(m1, 1) %>% select(-observer, -rD) %>% distinct()
+samples1 <- get_slopes_pilot(m1, 1) %>% select(-observer, -rD) %>% distinct()
 
 
 # circle, diamond, orange, pink, purple, triangle
@@ -210,7 +209,7 @@ samples1 %>% mutate(feature_type = if_else(
 ```{r, message = FALSE, warning = FALSE, fig.cap = "Predicting person-level effects."}
 
 m2 <- readRDS("pilot2_random.model") 
-samples2 <- get_slopes(m2, 1) %>% select(-observer, -rD) %>% distinct()
+samples2 <- get_slopes_pilot(m2, 1) %>% select(-observer, -rD) %>% distinct()
 
 colourPalette2 <- c("#e78429", "#ed968c", "#7c4b73")
 
