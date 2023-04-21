@@ -344,6 +344,19 @@ lognormal
 </tr>
 </tbody>
 </table>
+<pre class="r"><code># for model checking purposes
+
+# shifted lognormal model
+summary(m_sft)
+plot(m_sft)
+
+# normal model
+summary(m_nrl)
+plot(m_nrl)
+
+# lognormal model
+summary(m_log)
+plot(m_log)</code></pre>
 <p>The shifted lognormal model gives the best prediction 100% of the time, meaning that we have strong evidence that we should prefer this model over the others.</p>
 <p>Some plots to illustrate our models:</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:hypothesis-1-plots"></span>
@@ -550,6 +563,9 @@ pltDcs</code></pre>
 Figure 3.2: Predicting person-level effects.
 </p>
 </div>
+<pre class="r"><code># model 2 - model checks
+summary(m2)
+plot(m2)</code></pre>
 <pre class="r"><code>things_to_calc &lt;- samples2 %&gt;% select( -D, -.draw) %&gt;% 
   distinct() %&gt;% 
   separate(feature, c(&quot;feature1&quot;, &quot;feature2&quot;)) 

@@ -129,6 +129,24 @@ knitr::kable(hyp_1_table) %>%
 
 ```
 
+```{r check-models, eval = FALSE}
+# for model checking purposes
+
+# shifted lognormal model
+summary(m_sft)
+plot(m_sft)
+
+# normal model
+summary(m_nrl)
+plot(m_nrl)
+
+# lognormal model
+summary(m_log)
+plot(m_log)
+
+```
+
+
 The shifted lognormal model gives the best prediction 100% of the time, meaning that we have strong evidence that we should prefer this model over the others.
 
 Some plots to illustrate our models:
@@ -224,6 +242,14 @@ samples2 %>% separate(feature, into = c("colour", "shape")) %>%
   xlab(expression(D[c,s])) -> pltDcs
 
 pltDcs
+
+```
+
+```{r check-model-2, eval = FALSE}
+
+# model 2 - model checks
+summary(m2)
+plot(m2)
 
 ```
 
