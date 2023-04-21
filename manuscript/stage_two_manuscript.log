@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  21 APR 2023 15:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  21 APR 2023 16:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -741,9 +741,6 @@ Jz-er-man,
  []
 
 [33] [34]) [35] (stage_two_manuscript.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `stage_two_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: 27EFA552D9E2407A59A161482B4CB0AC;7902.
  ) 
@@ -768,7 +765,7 @@ AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 1/urw/times/utmb8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on stage_two_manuscript.pdf (35 pages, 1431448 bytes).
+Output written on stage_two_manuscript.pdf (35 pages, 1431492 bytes).
 PDF statistics:
  916 PDF objects out of 1000 (max. 8388607)
  175 named destinations out of 1000 (max. 500000)

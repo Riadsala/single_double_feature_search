@@ -1,5 +1,5 @@
 ---
-title: "Supplementary Materials: Pilot Analysis"
+title: "Supplementary Materials: Registered Analysis"
 author: "ADF Clarke and AE Hughes"
 output: bookdown::html_document2
 ---
