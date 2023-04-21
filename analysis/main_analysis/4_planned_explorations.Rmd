@@ -237,12 +237,25 @@ ggplot(slopes, aes(Dp, De, colour = method)) + geom_point() +
 comp_corr <- function(obs, meth) {
   df <- filter(slopes, observer == obs, method == meth)
   r <- cor(df$De, df$Dp)
+
+  
   return(r)
+}
+
+comp_abs_err <- function(obs, meth) {
+  df <- filter(slopes, observer == obs, method == meth)
+  abs_err = sum(abs(df$De-df$Dp))
+  
+  return(abs_err)
 }
 
 r_col <- map_dbl(1:40, comp_corr, "collinear")
 r_bfe <- map_dbl(1:40, comp_corr, "best feature")
 r_oth <- map_dbl(1:40, comp_corr, "orthogonal contrast")
+
+abserr_col <- map_dbl(1:40, comp_abs_err, "collinear")
+abserr_bfe <- map_dbl(1:40, comp_abs_err, "best feature")
+abserr_oth <- map_dbl(1:40, comp_abs_err, "orthogonal contrast")
 ```
 
 Below, we can see that across all participants, orthogonal contrast generally has the highest correlation coefficient value, although there are several participants who are very poorly predicted by the orthogonal contrast method (unlike the collinear and the best feature methods).
@@ -254,6 +267,14 @@ tibble(method = rep(c("collinear", "best feature", "orthogonal contrast"),
                     each=40),
                 r = c(r_col, r_bfe, r_oth)) %>%
   ggplot(aes(r, fill = method)) + geom_histogram(alpha = 0.5, position=position_identity())
+
+
+tibble(method = rep(c("collinear", "best feature", "orthogonal contrast"), 
+                    each=40),
+                abs_err = c(abserr_col, abserr_bfe, abserr_oth)) %>%
+  ggplot(aes(abs_err, fill = method)) + geom_histogram(bins = 15, 
+                                                       alpha = 0.5, position=position_identity()) + 
+  scale_x_continuous("absolute error")
 
 ```
 
