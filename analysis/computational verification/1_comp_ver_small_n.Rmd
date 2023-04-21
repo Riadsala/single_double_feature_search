@@ -1,5 +1,5 @@
 ---
-title: '1: Computational Verification'
+title: '1: Computational Verification: small N'
 author: "ADF Clarke and AE Hughes"
 output: bookdown::html_document2
 ---
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 # Setup and Data Import
 
-```{r load-packages, include = FALSE}
+```{r load-packages, include = FALSE, warning = FALSE}
 library(tidyverse)
 library(brms)
 library(tidybayes)
@@ -25,7 +25,7 @@ library(ggpmisc)
 
 ```{r}
 # set ggplot2 theme
-theme_set(see::theme_abyss())
+theme_set(ggthemes::theme_tufte())
 
 # use parallel cores for mcmc chains!
 options(mc.cores = 4)
@@ -42,8 +42,8 @@ set.seed(100320021)
 
 We will import data from all experiments. While we're at it, we will remove error trials.
 
-```{r import-data}
-source("../scripts/import_and_tidy.R")
+```{r import-data, warning = FALSE}
+source("import_and_tidy.R")
 
 # reducing number of observations to 20
 d <- d %>%
@@ -110,16 +110,16 @@ left_join(Dp, De, by = c("exp_id", "d_feature")) %>%
     names_to = "method") %>%
   mutate(method = fct_relevel(method, "best feature", "orthog. contrast")) %>%
   ggplot(aes(x = Dp, y = D, colour = method)) +
-  geom_point(color = "yellow1") + 
-  geom_abline(linetype = 2, colour = "cyan") +
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") + 
+  geom_point(color = "#648FFF") + 
+  geom_abline(linetype = 2, colour = "#785EF0") +
+  geom_smooth(method = "lm", formula = y ~ x, colour = "#DC267F") + 
     stat_poly_eq(formula = y ~ x, 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
                parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4) +
   facet_wrap(~ method) + 
   scale_x_continuous("predicted D", limits = c(0, 90), breaks = seq(0, 90, 10)) + 
   scale_y_continuous("empirical D", limits = c(0, 90), breaks = seq(0, 90, 10)) +
-  scale_colour_manual(values = c("yellow1", "yellow1", "yellow1"))
+  scale_colour_manual(values = c("#648FFF", "#648FFF", "#648FFF"))
 ```
 
 Now put mean absolute error in a table:
@@ -139,7 +139,7 @@ left_join(Dp, De, by = c("exp_id", "d_feature")) %>%
 
 Now we compute $R^2$ to get a measure of how well $D_p$ predict the $D_e$, calculated for each method and each set of experiments, as well as an overall measure. 
 
-```{r}
+```{r, warning = FALSE}
 Dp_tmp <- left_join(Dp, De, by = c("exp_id", "d_feature")) %>%
   pivot_longer(-c(exp_id, d_feature, D, iter), names_to = "method", values_to = "Dp")
 
@@ -172,7 +172,6 @@ rm(df_r2, Dp_tmp)
 
 ```
 
-The values in the *all* column match those given in Figure 4 (top) (Buetti et al, 2019).
 
 ## Predicting Reaction Times
 
@@ -190,17 +189,17 @@ d %>% filter(exp_id %in% exps_to_predict, N_T > 0) %>%
 	group_by(exp_id,  d_feature, N_T) %>%
 	summarise(mean_rt = mean(mean_rt), .groups = "drop") %>%
 	left_join(rt_pred_collinear, by = c("exp_id", "d_feature", "N_T")) %>% 
-	ggplot(aes(x = p_rt, y = mean_rt, colour = "yellow1")) + 
-  geom_point(color = "yellow1", alpha = 0.5) + 
-  geom_abline(linetype = 2, colour = "cyan") + 
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") + 
+	ggplot(aes(x = p_rt, y = mean_rt, colour = "#648FFF")) + 
+  geom_point(color = "#648FFF", alpha = 0.5) + 
+  geom_abline(linetype = 2, colour = "#785EF0") + 
+  geom_smooth(method = "lm", formula = y ~ x, colour = "#DC267F") + 
   stat_poly_eq(formula = y ~ x, 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
                parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4) +
   coord_cartesian(ylim=c(400, 800), xlim=c(400,800)) +
   scale_x_continuous("predicted reaction time (ms)") +
   scale_y_continuous("empirical mean reaction time (ms)") +
-  scale_colour_manual(values = "yellow1") -> collinear_plot
+  scale_colour_manual(values = "#648FFF") -> collinear_plot
 
 rt_pred_orthog <- map_dfr(exps_to_predict, predict_rt, 'orthog. contrast')
 
@@ -210,17 +209,17 @@ d %>% filter(exp_id %in% exps_to_predict, N_T > 0) %>%
 	group_by(exp_id,  d_feature, N_T) %>%
 	summarise(mean_rt = mean(mean_rt), .groups = "drop") %>%
 	left_join(rt_pred_orthog, by = c("exp_id", "d_feature", "N_T")) %>% 
-	ggplot(aes(x = p_rt, y = mean_rt, colour = "yellow1")) + 
-  geom_point(color = "yellow1", alpha = 0.5) + 
-  geom_abline(linetype = 2, colour = "cyan") + 
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") + 
+	ggplot(aes(x = p_rt, y = mean_rt, colour = "#648FFF")) + 
+  geom_point(color = "#648FFF", alpha = 0.5) + 
+  geom_abline(linetype = 2, colour = "#785EF0") + 
+  geom_smooth(method = "lm", formula = y ~ x, colour = "#DC267F") + 
   stat_poly_eq(formula = y ~ x, 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
                parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4) +
   coord_cartesian(ylim=c(400, 800), xlim=c(400,800)) +
   scale_x_continuous("predicted reaction time (ms)") +
   scale_y_continuous("empirical mean reaction time (ms)") +
-  scale_colour_manual(values = "yellow1") -> orthog_plot
+  scale_colour_manual(values = "#648FFF") -> orthog_plot
 
 rt_pred_best <- map_dfr(exps_to_predict, predict_rt, 'best feature')
 
@@ -230,17 +229,17 @@ d %>% filter(exp_id %in% exps_to_predict, N_T > 0) %>%
 	group_by(exp_id,  d_feature, N_T) %>%
 	summarise(mean_rt = mean(mean_rt), .groups = "drop") %>%
 	left_join(rt_pred_best, by = c("exp_id", "d_feature", "N_T")) %>% 
-	ggplot(aes(x = p_rt, y = mean_rt, colour = "yellow1")) + 
-  geom_point(color = "yellow1", alpha = 0.5) + 
-  geom_abline(linetype = 2, colour = "cyan") + 
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") + 
+	ggplot(aes(x = p_rt, y = mean_rt, colour = "#648FFF")) + 
+  geom_point(color = "#648FFF", alpha = 0.5) + 
+  geom_abline(linetype = 2, colour = "#785EF0") + 
+  geom_smooth(method = "lm", formula = y ~ x, colour = "#DC267F") + 
   stat_poly_eq(formula = y ~ x, 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
                parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4) +
   coord_cartesian(ylim=c(400, 800), xlim=c(400,800)) +
   scale_x_continuous("predicted reaction time (ms)") +
   scale_y_continuous("empirical mean reaction time (ms)") +
-  scale_colour_manual(values = "yellow1") -> best_plot
+  scale_colour_manual(values = "#648FFF") -> best_plot
 
 best_plot + orthog_plot + collinear_plot
 
@@ -261,9 +260,9 @@ We now repeat all of the above, but in a Bayesian framework. This is intended to
 ```{r}
 #De <- map_dfr(c("1a", "1b", "2a", "2b", "2c", "3a", "3b", "4a", "4b", "4c" ),
 #              calc_D_per_feature, "Bayes")
-#saveRDS(De, "tmp.model")
+#saveRDS(De, "small_n.model")
 
-De <- readRDS("../models/tmp_small_n.model")
+De <- readRDS("small_n.model")
 
 De %>% 
   mutate(
@@ -295,7 +294,7 @@ Dp <- map_df(exps_to_predict, gen_exp_predictions, De, "Bayes")
 
 ```
 
-```{r, fig.cap = "Replication of Figure 4 (top row) from Buetti et al (2019), using Bayesian methods."}
+```{r, fig.cap = "Replication of Figure 4 (top row) from Buetti et al (2019), using Bayesian methods.", warning = FALSE}
 Dp %>% pivot_longer(
     c(`best feature`, `orthog. contrast`, collinear),
     names_to = "method", values_to = "Dp") %>%
@@ -321,72 +320,16 @@ DHDI <- full_join(DeHDI, DpHDI, by = c("exp_id", "d_feature"))
 
 
 ggplot(DHDI, aes(x = Dp, xmin = Dp_lower, xmax = Dp_upper , y = D, ymin = De_lower, ymax = De_upper, colour = method)) + 
-  geom_errorbar(colour = "yellow") + geom_errorbarh(colour = "yellow") + facet_wrap(~method) + 
-   geom_abline(linetype = 2, colour = "cyan") +
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") +
+  geom_errorbar(colour = "#648FFF") + geom_errorbarh(colour = "#648FFF") + facet_wrap(~method) + 
+   geom_abline(linetype = 2, colour = "#785EF0") +
+  geom_smooth(method = "lm", formula = y ~ x, colour = "#DC267F") +
       stat_poly_eq(formula = y ~ x, 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
                parse = TRUE, size = 2.8, label.y = 0.9, coef.digits = 3, rr.digits = 4) +
    scale_x_continuous("predicted D", limits = c(0, 90), breaks = seq(0, 90, 10)) + 
   scale_y_continuous("empirical D", limits = c(0, 90), breaks = seq(0, 90, 10)) +
-  scale_colour_manual(values = c("yellow1", "yellow1", "yellow1"))
+  scale_colour_manual(values = c("#648FFF", "#648FFF", "#648FFF"))
   
 
 ```
 
-
-```{r}
-
-# This generates the figure for the paper
-
-exps_to_predict <- c("2a", "2b", "2c", "4a", "4b", "4c")
-De <- map_dfr(unique(d$exp_id), calc_D_per_feature)
-Dp <- map_df(exps_to_predict, gen_exp_predictions, De)
-
-left_join(Dp, De, by = c("exp_id", "d_feature")) %>%
-  pivot_longer(
-    cols = c(`best feature`, `orthog. contrast`, collinear),
-    values_to = "Dp",
-    names_to = "method") %>%
-  mutate(method = fct_relevel(method, "best feature", "orthog. contrast")) %>%
-  filter(method == "collinear") %>%
-  ggplot(aes(x = Dp, y = D)) +
-  geom_point( color = "darkblue", alpha = 0.5) + 
-  geom_abline(linetype = 2) +
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") + 
-  scale_x_continuous("predicted D") + 
-  scale_y_continuous("empirical D")  + 
-  coord_fixed() + theme_bw() -> plt_D
-
-rt_pred <- rt_pred_collinear
-
-d %>% 
-  group_by(exp_id, p_id, d_feature, N_T) %>%
-  summarise(mean_rt = mean(rt), .groups = "drop") %>%
-  group_by(exp_id,  d_feature, N_T) %>%
-  summarise(mean_rt = mean(mean_rt), .groups = "drop") %>%
-  left_join(rt_pred, by = c("exp_id", "d_feature", "N_T")) %>% 
-  ggplot(aes(x = p_rt, y = mean_rt)) + 
-  geom_point(color = "darkblue", alpha = 0.5) + 
-  geom_abline(linetype = 2) +
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") + 
-  scale_x_continuous("predicted rt (sec)") +
-  scale_y_continuous("empirical mean rt (sec)") + theme_bw() -> plt_mean_rt
-  #coord_fixed() -> plt_mean_rt
-
-
-d %>%
-  group_by(exp_id, p_id, d_feature, N_T) %>%
-  sample_n(1) %>%
-  left_join(rt_pred, by = c("exp_id", "d_feature", "N_T")) %>% 
-  ggplot(aes(x = p_rt, y = rt)) + 
-  geom_point(color = "darkblue", alpha = 0.15) + 
-  geom_abline(linetype = 2) +
-  geom_smooth(method = "lm", formula = y ~ x, colour = "violetred3") + 
-  scale_x_continuous("predicted rt (sec)") +
-  scale_y_continuous("sampled rt (sec)") + theme_bw() -> plt_sample_rt
-
-ggsave("computational_replication.pdf", plt_D + plt_mean_rt + plt_sample_rt, width = 8, height = 3)
-
-
-```
