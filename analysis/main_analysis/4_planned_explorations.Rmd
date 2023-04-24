@@ -343,10 +343,13 @@ slopes %>% ggplot(aes(.value, fill = ring)) + geom_density(alpha = 0.5) +
 ``` {r plot-ring-model-2, fig.cap = "Fixed effects for predicting the effect of ring, feature and number of distractors on response times."}
 
 d1 %>% modelr::data_grid(feature, ring, lnd = seq(0, 3.5, 0.1)) %>%
-  add_epred_draws(m1, ndraws = 100, re_formula = NA) -> pred
+  add_epred_draws(m1, ndraws = 1000, re_formula = NA) -> pred
 
-ggplot(pred, aes(x = lnd, y = .epred, colour = ring, group = .draw)) +
-  geom_path(alpha = 0.1) + 
+pred %>% group_by(feature, ring, lnd) %>%
+  median_hdci(.epred, .width = c(0.53, 0.97)) -> pred2
+
+ggplot(pred2, aes(x = lnd, ymin = .lower, ymax = .upper, fill = ring, group = interaction(ring, .width))) +
+  geom_ribbon(alpha = 0.5) + 
   facet_wrap(~feature) +
   ggthemes::scale_color_ptol()
 
