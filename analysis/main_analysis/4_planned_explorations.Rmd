@@ -280,7 +280,7 @@ tibble(method = rep(c("collinear", "best feature", "orthogonal contrast"),
 
 
 ```{r, include = FALSE}
-rm(list = ls(all.names = TRUE))
+#rm(list = ls(all.names = TRUE))
 ```
 
 
@@ -351,13 +351,15 @@ pred %>% group_by(feature, ring, lnd) %>%
 ggplot(pred2, aes(x = lnd, ymin = .lower, ymax = .upper, fill = ring, group = interaction(ring, .width))) +
   geom_ribbon(alpha = 0.5) + 
   facet_wrap(~feature) +
-  ggthemes::scale_color_ptol()
+  scale_fill_manual(values = colourPalette) +
+  xlab("Log number of distractors") +
+  ylab("Predicted response time (sec)")
 
 ```
 
 ``` {r include = FALSE}
 
-#ggsave("../../plots/ring_single_feature.pdf", width = 7, height = 3)
+ggsave("../../plots/ring_single_feature.pdf", width = 7, height = 3)
 
 ```
 
