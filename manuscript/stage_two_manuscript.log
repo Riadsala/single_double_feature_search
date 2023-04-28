@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  27 APR 2023 17:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  28 APR 2023 12:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -618,7 +618,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 146.
 
 [9]
-<../plots/computational_replication.pdf, id=461, 578.16pt x 216.81pt>
+<../plots/computational_replication.pdf, id=460, 578.16pt x 216.81pt>
 File: ../plots/computational_replication.pdf Graphic file (type pdf)
 <use ../plots/computational_replication.pdf>
 Package pdftex.def Info: ../plots/computational_replication.pdf  used on input 
@@ -648,18 +648,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 212--213
 
  []
 
-
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 213--214
 
  []
 
-[12]
+
 Underfull \hbox (badness 10000) in paragraph at lines 214--215
 
  []
 
 [13] [14]
-<../plots/n_trials.pdf, id=548, 578.16pt x 216.81pt>
+<../plots/n_trials.pdf, id=547, 578.16pt x 216.81pt>
 File: ../plots/n_trials.pdf Graphic file (type pdf)
 <use ../plots/n_trials.pdf>
 Package pdftex.def Info: ../plots/n_trials.pdf  used on input line 244.
@@ -683,8 +683,11 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 312.
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 [18]
-<../plots/Dpe.pdf, id=616, 505.89pt x 216.81pt>
+<../plots/Dpe.pdf, id=617, 505.89pt x 216.81pt>
 File: ../plots/Dpe.pdf Graphic file (type pdf)
 <use ../plots/Dpe.pdf>
 Package pdftex.def Info: ../plots/Dpe.pdf  used on input line 339.
@@ -703,11 +706,7 @@ File: ../plots/ring_single_feature.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../plots/ring_single_feature.pdf  used on input line 4
 08.
 (pdftex.def)             Requested size: 390.0pt x 167.14601pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[22] [23 <../plots/ring_single_feature.pdf>] [24] [25]
+ [22] [23 <../plots/ring_single_feature.pdf>] [24] [25]
 Overfull \hbox (5.98071pt too wide) in paragraph at lines 460--461
 []\OT1/ptm/m/n/12 Another pos-si-bil-ity is that be-cause some par-tic-i-pants 
 had neg-a-tive search slopes,
@@ -729,24 +728,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 483--485
 
  []
 
-[28] (stage_two_manuscript.bbl [29] [30] [31]
+[28] (stage_two_manuscript.bbl [29] [30] [31] [32]
 Underfull \hbox (badness 1406) in paragraph at lines 267--274
 []\OT1/ptm/m/n/12 Hannah Moshontz, Lorne Camp-bell, Charles R Eber-sole, Hans I
 Jz-er-man,
  []
 
-[32] [33] [34]) [35] (stage_two_manuscript.aux)
+[33] [34]) [35] (stage_two_manuscript.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `stage_two_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: D6C7967AEBAAA94B7EDC8F5E24844F54;7912.
  ) 
 Here is how much of TeX's memory you used:
  11639 strings out of 475389
  185808 string characters out of 2774134
- 530196 words of memory out of 3000000
+ 531196 words of memory out of 3000000
  32650 multiletter control sequences out of 15000+600000
  510375 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,10n,77p,1944b,684s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,10n,77p,1944b,680s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.e
 nc}<C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmex10.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
@@ -760,7 +762,7 @@ AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 1/urw/times/utmb8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on stage_two_manuscript.pdf (35 pages, 1025758 bytes).
+Output written on stage_two_manuscript.pdf (35 pages, 1026053 bytes).
 PDF statistics:
  919 PDF objects out of 1000 (max. 8388607)
  175 named destinations out of 1000 (max. 500000)
