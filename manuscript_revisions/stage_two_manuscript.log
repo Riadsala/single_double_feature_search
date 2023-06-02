@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  1 JUN 2023 14:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  2 JUN 2023 16:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -704,7 +704,7 @@ Package pdftex.def Info: ../plots/single_feature_correlations.pdf  used on inpu
 t line 387.
 (pdftex.def)             Requested size: 390.0pt x 139.28833pt.
  [21]
-<../plots/ring_single_feature.pdf, id=658, 505.89pt x 216.81pt>
+<../plots/ring_single_feature.pdf, id=660, 505.89pt x 216.81pt>
 File: ../plots/ring_single_feature.pdf Graphic file (type pdf)
 <use ../plots/ring_single_feature.pdf>
 Package pdftex.def Info: ../plots/ring_single_feature.pdf  used on input line 4
@@ -712,45 +712,45 @@ Package pdftex.def Info: ../plots/ring_single_feature.pdf  used on input line 4
 (pdftex.def)             Requested size: 390.0pt x 167.14601pt.
  [22 <../plots/single_feature_correlations.pdf>] [23 <../plots/ring_single_feat
 ure.pdf>] [24] [25]
-Overfull \hbox (5.98071pt too wide) in paragraph at lines 460--461
+Overfull \hbox (5.98071pt too wide) in paragraph at lines 462--463
 []\OT1/ptm/m/n/12 Another pos-si-bil-ity is that be-cause some par-tic-i-pants 
 had neg-a-tive search slopes,
  []
 
-
-Overfull \hbox (4.8892pt too wide) in paragraph at lines 466--467
+[26]
+Overfull \hbox (4.8892pt too wide) in paragraph at lines 468--469
 []\OT1/ptm/m/n/12 Our (planned) ex-ploratory anal-y-sis of the in-di-vid-ual di
 f-fer-ences in search slopes
  []
 
-[26] [27]
-Underfull \hbox (badness 10000) in paragraph at lines 481--483
-
- []
-
-
+[27] [28]
 Underfull \hbox (badness 10000) in paragraph at lines 483--485
 
  []
 
-[28] (stage_two_manuscript.bbl [29] [30] [31] [32]
+
+Underfull \hbox (badness 10000) in paragraph at lines 485--487
+
+ []
+
+[29] (stage_two_manuscript.bbl [30] [31] [32]
 Underfull \hbox (badness 1406) in paragraph at lines 267--274
 []\OT1/ptm/m/n/12 Hannah Moshontz, Lorne Camp-bell, Charles R Eber-sole, Hans I
 Jz-er-man,
  []
 
-[33] [34]) [35] (stage_two_manuscript.aux)
+[33] [34] [35]) [36] (stage_two_manuscript.aux)
 Package rerunfilecheck Info: File `stage_two_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: D6C7967AEBAAA94B7EDC8F5E24844F54;7912.
  ) 
 Here is how much of TeX's memory you used:
- 11640 strings out of 475389
- 185899 string characters out of 2774134
- 531197 words of memory out of 3000000
- 32650 multiletter control sequences out of 15000+600000
+ 11649 strings out of 475389
+ 186088 string characters out of 2774134
+ 531303 words of memory out of 3000000
+ 32656 multiletter control sequences out of 15000+600000
  510375 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,10n,77p,1944b,672s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,10n,77p,1944b,688s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.e
 nc}<C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmex10.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
@@ -764,9 +764,9 @@ AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 1/urw/times/utmb8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on stage_two_manuscript.pdf (35 pages, 1026517 bytes).
+Output written on stage_two_manuscript.pdf (36 pages, 1031571 bytes).
 PDF statistics:
- 921 PDF objects out of 1000 (max. 8388607)
- 176 named destinations out of 1000 (max. 500000)
+ 941 PDF objects out of 1000 (max. 8388607)
+ 179 named destinations out of 1000 (max. 500000)
  359 words of extra memory for PDF output out of 10000 (max. 10000000)
 

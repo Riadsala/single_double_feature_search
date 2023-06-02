@@ -1,4 +1,4 @@
-\begin{thebibliography}{64}
+\begin{thebibliography}{66}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -272,6 +272,11 @@ Hannah Moshontz, Lorne Campbell, Charles~R Ebersole, Hans IJzerman, Heather~L
 \newblock \emph{Advances in Methods and Practices in Psychological Science},
   1\penalty0 (4):\penalty0 501--515, 2018.
 
+\bibitem[Navalpakkam and Itti(2007)]{navalpakkam2007search}
+Vidhya Navalpakkam and Laurent Itti.
+\newblock Search goal tunes visual features optimally.
+\newblock \emph{Neuron}, 53\penalty0 (4):\penalty0 605--617, 2007.
+
 \bibitem[Ng et~al.(2020)Ng, Buetti, Patel, and Lleras]{ng2020prioritization}
 Gavin~JP Ng, Simona Buetti, Trisha~N Patel, and Alejandro Lleras.
 \newblock Prioritization in visual attention does not work the way you think it
@@ -423,6 +428,11 @@ Xinger Yu, Timothy~D Hanks, and Joy~J Geng.
   information during visual search.
 \newblock \emph{Psychological science}, 33\penalty0 (1):\penalty0 105--120,
   2022.
+
+\bibitem[Yu et~al.(2023)Yu, Zhou, Becker, Boettcher, and Geng]{yu2023good}
+Xinger Yu, Zhiheng Zhou, Stefanie~I Becker, Sage~EP Boettcher, and Joy~J Geng.
+\newblock Good-enough attentional guidance.
+\newblock \emph{Trends in Cognitive Sciences}, 2023.
 
 \bibitem[Zhang et~al.(2008)Zhang, Tong, Marks, Shan, and
   Cottrell]{zhang2008sun}
