@@ -11,11 +11,18 @@ source("../scripts/our_functions.R")
 set.seed(100320021)
 
 d <- read_csv("../../data/main/accuracy_rt_data.txt", show_col_types = F) %>%
+  # first, before we do anything else, recover trial number
+  group_by(observer) %>% 
+  mutate(trial_n = 1:n()) %>%
+  ungroup() %>%
   filter(!is.na(rt)) %>%
   mutate(
          colour = as_factor(feature),
          nd = distractor_no) %>%
-  select(observer, experiment = "block", colour, nd, accuracy, rt, image = "imageFileName")
+  select(observer, experiment = "block", trial = trial_n, colour, nd, accuracy, rt, image = "imageFileName")
+
+# add in subblock variable
+d %>% mutate(block = ceiling(trial/320)) -> d
 
 # fix observer variable... 1 should be 01
 # also change to a factor
