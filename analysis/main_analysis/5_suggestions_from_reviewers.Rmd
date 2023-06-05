@@ -1,0 +1,106 @@
+---
+title: "Supplementary Materials: SUggestions from Reviewers"
+author: "Alasdair D.F. Clarke and Anna E. Hughes"
+date: "2023-03-24"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.height = 3,
+  fig.align = "center")
+```
+
+# Introduction
+
+```{r load-packages, include = FALSE}
+library(tidyverse)
+library(brms)
+library(tidybayes)
+library(patchwork)
+library(latex2exp)
+library(ggpmisc)
+library(ggridges)
+library(corrr)
+library(knitr)
+library(kableExtra)
+```
+
+```{r}
+# set ggplot2 theme
+theme_set(ggthemes::theme_tufte())
+colourPalette <- c("#e78429", "#ed968c", "#7c4b73","#aadce0", "#72bcd5", "528fad")
+
+# use parallel cores for mcmc chains!
+options(mc.cores = 4)
+
+# reduce the number of decimal places
+options(digits = 3)
+
+# functions used for our Bayesian re-analysis
+source("../scripts/our_functions.R")
+
+# set seed to make sure everything is reproducible 
+set.seed(100320021)
+```
+
+
+Here we present two additional analysis that were suggested during the Stage Two peer review process. We thank the reviewers for their suggestions. 
+
+# Effect of block on correlations
+
+In `4_Planned_Explorations` we reported that \ldots. 
+
+During peer review it was suggested that we could partially disentangle contributions of feature type and block from one another by looking at how the correlations change within sub-blocks. <EXPAND>. 
+
+If the correlation results are primarily being driven by block, then we could expect to see a decreases in the correlation over sub-blocks. Whereas if it is down to the difference in colour v shape features.
+
+
+## Import Data
+
+As this analysis was not originally planned, sub-block was not saved, stored and calculated in our original pre-processing pipeline. But, we can re-import and reconstruct it here!
+
+```{r cache=TRUE, warning = FALSE}
+
+d <- read_csv("../../data/main/accuracy_rt_data.txt", show_col_types = F) %>%
+  mutate(
+         colour = as_factor(feature),
+         nd = distractor_no) %>%
+  select(observer, experiment = "block", colour, nd, accuracy, rt)
+```
+
+First check that all the `1b` trials are clumped together in their own block:
+
+```{r}
+
+d %>% mutate(n = 1:n()) %>% 
+  filter(experiment == "1b") 
+```
+
+These all seem to be consecutive, so we can remove them.
+
+```{r}
+d <- filter(d, experiment != "1b")
+
+# now check we have even trials per person!
+d %>% group_by(observer) %>%
+  summarise(n = n()) %>%
+  summarise(unique_n = unique(n))
+```
+Trials where presented in sub-blocks of 320 trials, so let us reconstruct that!
+
+```{r}
+d %>% group_by(observer) %>%
+  mutate(trial = 1:n(),
+         block = ceiling(trial/320)) -> d
+```
+
+
+Now carry out the rest of our original pre-processing (exactly as before)
+
+```{r}
+summary(d)
+
+```
+

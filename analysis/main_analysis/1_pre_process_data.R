@@ -10,7 +10,6 @@ source("../scripts/our_functions.R")
 # set seed to make sure everything is reproducible 
 set.seed(100320021)
 
-
 d <- read_csv("../../data/main/accuracy_rt_data.txt", show_col_types = F) %>%
   filter(!is.na(rt)) %>%
   mutate(
@@ -18,13 +17,12 @@ d <- read_csv("../../data/main/accuracy_rt_data.txt", show_col_types = F) %>%
          nd = distractor_no) %>%
   select(observer, experiment = "block", colour, nd, accuracy, rt, image = "imageFileName")
 
-# fix observer varaible... 1 should be 01
+# fix observer variable... 1 should be 01
 # also change to a factor
 d %>% mutate(observer = if_else(observer%in%c("1","2","3"), 
                                 paste0("0", observer), observer),
              observer = as_factor(observer),
              observer = fct_relevel(observer, "01", "02", "03")) -> d
-  
 
 # check acc is ok
 d %>% group_by(observer, experiment, colour, nd) %>%
