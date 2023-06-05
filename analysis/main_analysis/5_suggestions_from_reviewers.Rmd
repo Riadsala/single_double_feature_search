@@ -57,50 +57,46 @@ During peer review it was suggested that we could partially disentangle contribu
 If the correlation results are primarily being driven by block, then we could expect to see a decreases in the correlation over sub-blocks. Whereas if it is down to the difference in colour v shape features.
 
 
-## Import Data
-
-As this analysis was not originally planned, sub-block was not saved, stored and calculated in our original pre-processing pipeline. But, we can re-import and reconstruct it here!
 
 ```{r cache=TRUE, warning = FALSE}
+## Import and Remove Outliers 
+source("1_pre_process_data.R")
 
-d <- read_csv("../../data/main/accuracy_rt_data.txt", show_col_types = F) %>%
-  mutate(
-         colour = as_factor(feature),
-         nd = distractor_no) %>%
-  select(observer, experiment = "block", colour, nd, accuracy, rt)
+# we only want blocks 1-4
+d1 <- d1 %>% filter(block != 5)
 ```
 
-First check that all the `1b` trials are clumped together in their own block:
+We're going to refit the model (single feature only), this time including block info. 
 
 ```{r}
 
-d %>% mutate(n = 1:n()) %>% 
-  filter(experiment == "1b") 
-```
+n_chains = 4
+n_itr = 5000
 
-These all seem to be consecutive, so we can remove them.
+fit_model <- function(d, fam, prior, formula, samp_prior = "no") { 
+  
+  # wrapper function for running models
+  # this way, easier to make sure all models are using the same settings!
+  
+  m <- brm(
+    formula,
+    data = d,
+    family = brmsfamily(fam),
+    prior = prior,
+    chains = n_chains,
+    iter = n_itr,
+    init = my_inits,
+    save_pars = save_pars(all=TRUE),
+    silent = TRUE,
+    backend = 'cmdstanr',
+    control = list(adapt_delta = 0.9),
+    sample_prior = samp_prior,
+    backend = "cmdstanr")
+  
+  return(m)
+}
 
-```{r}
-d <- filter(d, experiment != "1b")
 
-# now check we have even trials per person!
-d %>% group_by(observer) %>%
-  summarise(n = n()) %>%
-  summarise(unique_n = unique(n))
-```
-Trials where presented in sub-blocks of 320 trials, so let us reconstruct that!
-
-```{r}
-d %>% group_by(observer) %>%
-  mutate(trial = 1:n(),
-         block = ceiling(trial/320)) -> d
-```
-
-
-Now carry out the rest of our original pre-processing (exactly as before)
-
-```{r}
-summary(d)
 
 ```
 

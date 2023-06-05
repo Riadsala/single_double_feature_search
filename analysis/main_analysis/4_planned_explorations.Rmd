@@ -96,8 +96,6 @@ samples1 %>% group_by(feature, observer) %>%
             range = maxD - minD)
 ```
 
-
-
 Define a little function for computing correlation for a sample from our posterior:
 
 ```{r}
@@ -130,7 +128,6 @@ dcorr %>% group_by(x, y) %>%
   median_hdci(r, .width = 0.97) %>%
   mutate(fill = if_else(.lower>0, "nonezero", "zero")) %>%
   select(x, y, fill) -> dfill
-
 
 ggplot(left_join(dcorr, dfill, by = c("x", "y")), aes(x, r)) +
   stat_slabinterval(alpha = 0.5, aes(fill = fill), 
