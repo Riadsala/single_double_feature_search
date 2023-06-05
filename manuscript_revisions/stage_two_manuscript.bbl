@@ -1,4 +1,4 @@
-\begin{thebibliography}{66}
+\begin{thebibliography}{67}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -386,6 +386,12 @@ Zhiyuan Wang, Simona Buetti, and Alejandro Lleras.
 \newblock Predicting search performance in heterogeneous visual search scenes
   with real-world objects.
 \newblock \emph{Collabra: Psychology}, 3\penalty0 (1), 2017.
+
+\bibitem[Wang et~al.(2018)Wang, Lleras, and Buetti]{wang2018parallel}
+Zhiyuan Wang, Alejandro Lleras, and Simona Buetti.
+\newblock Parallel, exhaustive processing underlies logarithmic search
+  functions: Visual search with cortical magnification.
+\newblock \emph{Psychonomic bulletin \& review}, 25:\penalty0 1343--1350, 2018.
 
 \bibitem[Wolfe(1998)]{wolfe1998can}
 Jeremy~M Wolfe.
