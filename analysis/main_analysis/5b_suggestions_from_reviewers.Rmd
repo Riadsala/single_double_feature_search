@@ -1,0 +1,97 @@
+---
+title: "Supplementary Materials: SUggestions from Reviewers"
+author: "Alasdair D.F. Clarke and Anna E. Hughes"
+date: "2023-03-24"
+output: bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.height = 3,
+  fig.align = "center")
+```
+
+# Introduction
+
+```{r load-packages, include = FALSE}
+library(tidyverse)
+library(brms)
+library(tidybayes)
+library(patchwork)
+library(latex2exp)
+library(ggpmisc)
+library(ggridges)
+library(corrr)
+library(knitr)
+library(kableExtra)
+```
+
+```{r}
+# set ggplot2 theme
+theme_set(ggthemes::theme_tufte())
+colourPalette <- c("#e78429", "#ed968c", "#7c4b73","#aadce0", "#72bcd5", "528fad")
+
+# use parallel cores for mcmc chains!
+options(mc.cores = 4)
+
+# reduce the number of decimal places
+options(digits = 3)
+
+# functions used for our Bayesian re-analysis
+source("../scripts/our_functions.R")
+
+# set seed to make sure everything is reproducible 
+set.seed(100320021)
+```
+
+
+
+# Removing Small Slopes
+
+This is the second analysis. To be merged with the main 5_ when complete.
+
+First, load the ring models
+
+```{r}
+m1 <- readRDS("exp1_ring.model")
+```
+
+```{r}
+# get slopes!
+samples1 <- get_slopes(m1, rings = TRUE, fixed = FALSE)
+```
+
+## Check prob slope < 0 
+
+
+```{r}
+samples1 %>% group_by(feature, ring, observer) %>%
+  summarise(prob_neg = mean(D<0), .groups = "drop") %>%
+  filter(prob_neg > 0.05) -> neg_slopes
+
+neg_slopes %>% group_by(feature, ring) %>%
+  summarise(n = n()) %>%
+  knitr::kable()
+```
+
+We will remove the purple condition entirely, and then remove anybody who has a negative slope in any other condition. How many people are we left with?
+
+
+```{r}
+
+neg_slopes %>% 
+  filter(feature != "purple", ring>1) -> neg_slopes2
+
+#%>%   filter(feature != "pink") 
+
+length(unique(neg_slopes2$observer))
+
+samples1 %>% filter(!(observer %in% neg_slopes$observer)) -> samples1
+
+
+samples1 %>% group_by(feature, ring, observer) %>% 
+  summarise(minD = min(D)) %>% 
+  summarise(n = n())
+
+```

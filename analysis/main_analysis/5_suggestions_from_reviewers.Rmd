@@ -76,51 +76,76 @@ We're going to refit the model (single feature only), this time including block 
 n_chains = 4
 n_itr = 5000
 
-fit_model <- function(d, fam, prior, formula, samp_prior = "no") { 
-  
-  # wrapper function for running models
-  # this way, easier to make sure all models are using the same settings!
-  
-  m <- brm(
-    formula,
-    data = d,
-    family = brmsfamily(fam),
-    prior = prior,
-    chains = n_chains,
-    iter = n_itr,
-    init = my_inits,
-    save_pars = save_pars(all=TRUE),
-    silent = TRUE,
-    backend = 'cmdstanr',
-    control = list(adapt_delta = 0.9),
-    sample_prior = samp_prior)
-  
-  return(m)
-}
-
-
-my_f <- brms::bf(rt ~ 0 + block + block:feature:lnd + (0 + block + feature:lnd|observer),
-                 ndt ~ 1 + (1|observer))
-
-my_inits <- list(list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10))
-
-my_prior <- c(
-  # prior_string("normal(-0.5, 0.3)", class = "Intercept"),
-  prior_string("normal(0, 0.2)", class = "b"),
-  prior_string("normal(-1, 0.2)", class = "b", coef = "block1"),
-  prior_string("normal(-1, 0.2)", class = "b", coef = "block2"),
-  prior_string("normal(-1, 0.2)", class = "b", coef = "block3"),
-  prior_string("normal(-1, 0.2)", class = "b", coef = "block4"),
-  prior_string("normal(-1, 0.2)", class = "b", coef = "block5"),
-  prior_string("normal(-1, 0.5)", class = "Intercept", dpar = "ndt" ),
-  prior_string("cauchy(0, 0.4)", class = "sigma"),
-  prior_string("cauchy(0, 0.05)", class = "sd"),
-  prior_string("cauchy(0, 0.05)", class = "sd", dpar = "ndt"))
-
-# now run model for single feature data
-m <- fit_model(d1, "shifted_lognormal", my_prior, my_f)
-saveRDS(m, "exp1_block.model")
+# fit_model <- function(d, fam, prior, formula, samp_prior = "no") { 
+#   
+#   # wrapper function for running models
+#   # this way, easier to make sure all models are using the same settings!
+#   
+#   m <- brm(
+#     formula,
+#     data = d,
+#     family = brmsfamily(fam),
+#     prior = prior,
+#     chains = n_chains,
+#     iter = n_itr,
+#     init = my_inits,
+#     save_pars = save_pars(all=TRUE),
+#     silent = TRUE,
+#     backend = 'cmdstanr',
+#     control = list(adapt_delta = 0.9),
+#     sample_prior = samp_prior)
+#   
+#   return(m)
+# }
+# 
+# 
+# my_f <- brms::bf(rt ~ 0 + block + block:feature:lnd + (0 + block + feature:lnd|observer),
+#                  ndt ~ 1 + (1|observer))
+# 
+# my_inits <- list(list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10))
+# 
+# my_prior <- c(
+#   # prior_string("normal(-0.5, 0.3)", class = "Intercept"),
+#   prior_string("normal(0, 0.2)", class = "b"),
+#   prior_string("normal(-1, 0.2)", class = "b", coef = "block1"),
+#   prior_string("normal(-1, 0.2)", class = "b", coef = "block2"),
+#   prior_string("normal(-1, 0.2)", class = "b", coef = "block3"),
+#   prior_string("normal(-1, 0.2)", class = "b", coef = "block4"),
+#   prior_string("normal(-1, 0.2)", class = "b", coef = "block5"),
+#   prior_string("normal(-1, 0.5)", class = "Intercept", dpar = "ndt" ),
+#   prior_string("cauchy(0, 0.4)", class = "sigma"),
+#   prior_string("cauchy(0, 0.05)", class = "sd"),
+#   prior_string("cauchy(0, 0.05)", class = "sd", dpar = "ndt"))
+# 
+# # now run model for single feature data
+# m <- fit_model(d1, "shifted_lognormal", my_prior, my_f)
+# saveRDS(m, "exp1_block.model")
 rm(m)
 
+# read in model
+m <- readRDS("exp1_block.model")
+summary(m)
 ```
+
+Extract slopes per person x feature x block
+
+```{r}
+# extract the slopes per person per feature per block
+samples <- gather_draws(m, `[rb]_.*`, regex=T, ndraws = 100)
+    
+   samples_ff <- filter(samples, str_detect(.variable, "b_"))
+   
+   samples_rf <- filter(samples, str_detect(.variable, "r_")) %>% 
+     select(-.chain, -.iteration) %>% 
+     filter(str_detect(.variable, ":lnd")) %>%
+     rename(feature = ".variable", rD = ".value") %>%
+     separate(feature, into = c("observer", "feature"), ",") %>%
+     mutate(observer = parse_number(observer),
+            feature = str_remove(feature, "feature"),
+            feature = str_remove(feature, ":lnd"),
+            feature = str_remove(feature, "]")) 
+
+```
+
+
 
