@@ -62,9 +62,11 @@ If the correlation results are primarily being driven by block, then we could ex
 ## Import and Remove Outliers 
 source("1_pre_process_data.R")
 
-# we only want blocks 1-4
-d1 <- d1 %>% filter(block != 5) %>%
-  mutate(block = as_factor(block))
+# remove feature = circle, diamond, triangle (these are all expt 1b, which is blocked)
+# expt 1b is in a different block for each person so each person will have one block missing at random, but I THINK this will be okay
+d1 <- d1 %>% 
+  mutate(block = as_factor(block)) %>%
+  filter(feature == "pink" | feature == "purple" | feature == "orange")
 ```
 
 We're going to refit the model (single feature only), this time including block info. 
@@ -72,7 +74,7 @@ We're going to refit the model (single feature only), this time including block 
 ```{r}
 
 n_chains = 4
-n_itr = 500
+n_itr = 5000
 
 fit_model <- function(d, fam, prior, formula, samp_prior = "no") { 
   
@@ -105,10 +107,11 @@ my_inits <- list(list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Inte
 my_prior <- c(
   # prior_string("normal(-0.5, 0.3)", class = "Intercept"),
   prior_string("normal(0, 0.2)", class = "b"),
-  prior_string("normal(-1, 0.3)", class = "b", coef = "block1"),
-  prior_string("normal(-1, 0.3)", class = "b", coef = "block2"),
-  prior_string("normal(-1, 0.3)", class = "b", coef = "block3"),
-  prior_string("normal(-1, 0.3)", class = "b", coef = "block4"),
+  prior_string("normal(-1, 0.2)", class = "b", coef = "block1"),
+  prior_string("normal(-1, 0.2)", class = "b", coef = "block2"),
+  prior_string("normal(-1, 0.2)", class = "b", coef = "block3"),
+  prior_string("normal(-1, 0.2)", class = "b", coef = "block4"),
+  prior_string("normal(-1, 0.2)", class = "b", coef = "block5"),
   prior_string("normal(-1, 0.5)", class = "Intercept", dpar = "ndt" ),
   prior_string("cauchy(0, 0.4)", class = "sigma"),
   prior_string("cauchy(0, 0.05)", class = "sd"),
