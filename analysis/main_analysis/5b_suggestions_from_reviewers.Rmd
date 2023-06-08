@@ -39,7 +39,7 @@ options(mc.cores = 4)
 options(digits = 3)
 
 # functions used for our Bayesian re-analysis
-source("../scripts/our_functions.R")
+source("../../analysis/../analysis/scripts/our_functions.R")
 
 # set seed to make sure everything is reproducible 
 set.seed(100320021)
@@ -53,9 +53,24 @@ This is the second analysis. To be merged with the main 5_ when complete.
 
 First, load the ring models
 
+First, read in data and models again: 
 ```{r}
-m1 <- readRDS("exp1_ring.model")
+source("../scripts/pred_rt_functions.R")
+source("1_pre_process_data.R")
+
+d1 %>% mutate(observer = as.numeric(observer)) %>%
+  select(-nd) -> d1
+
+d2 %>% mutate(observer = as.numeric(observer)) %>%
+  select(-nd) -> d2
+
+d2 %>% unite(feature, feature1, feature2) -> d2
+
+m1 <- readRDS("exp1_ring.model") 
+
+m2 <- readRDS("exp2_ring.model") 
 ```
+
 
 ```{r}
 # get slopes!
@@ -68,30 +83,139 @@ samples1 <- get_slopes(m1, rings = TRUE, fixed = FALSE)
 ```{r}
 samples1 %>% group_by(feature, ring, observer) %>%
   summarise(prob_neg = mean(D<0), .groups = "drop") %>%
-  filter(prob_neg > 0.05) -> neg_slopes
+  filter(prob_neg > 0.0) -> neg_slopes
 
 neg_slopes %>% group_by(feature, ring) %>%
   summarise(n = n()) %>%
   knitr::kable()
 ```
 
-We will remove the purple condition entirely, and then remove anybody who has a negative slope in any other condition. How many people are we left with?
-
+We will remove the purple and pink conditions entirely, and then remove the inner ring, we remove all people with a negative slope, then we just have three people to remove to avoid having any negative slopes. 
 
 ```{r}
 
 neg_slopes %>% 
-  filter(feature != "purple", ring>1) -> neg_slopes2
+  filter(!(feature %in% c("pink", "purple")), ring>1) -> neg_slopes2
 
-#%>%   filter(feature != "pink") 
+neg_slopes2
+```
 
-length(unique(neg_slopes2$observer))
-
-samples1 %>% filter(!(observer %in% neg_slopes$observer)) -> samples1
+Now repeat the predictions for individuals (code copied from `4_planned_explorations`).
 
 
-samples1 %>% group_by(feature, ring, observer) %>% 
-  summarise(minD = min(D)) %>% 
-  summarise(n = n())
+```{r}
+ndraws <- 100
+
+source("../scripts/pred_rt_functions.R")
+
+model1 <- get_rt_model_ring_obs(m1)
+rm(m1)
+model2 <- get_rt_model_ring_obs(m2)
+rm(m2)
+
+
+
+# convert in order to get D predictions for m2
+full_join(
+  model1 %>% filter(feature %in% c("orange", "pink", "purple")) %>%
+    rename(feature1 = "feature", D1 = "D"),
+  model1 %>% filter(feature %in% c("circle", "diamond", "triangle")) %>%
+    rename(feature2 = "feature", D2 = "D"),
+  by = c(".draw", "observer", "ring", "a", "ndt", "sd")) %>%
+  unite(feature, feature1, feature2) %>%
+  mutate(D_collinear = 1/((1/D1) + (1/D2)),
+         D_best_feature = pmin(D1, D2),
+         D_orth_contrast =  1/sqrt(1/(D1^2) + (1/D2^2))) %>%
+  select(.draw, observer, ring, feature, D_collinear, D_best_feature, D_orth_contrast) -> Dp
+
+# merge everything
+full_join(model2, Dp, 
+          by = c(".draw", "observer", "ring", "feature")) %>%
+  pivot_longer(c(D, 
+                 D_collinear, D_best_feature, D_orth_contrast), 
+               names_to = "method", values_to = "b") -> models
+
+rm(Dp)
+rm(model1, model2)
+
 
 ```
+
+Now remove ring 1, purple, pink and the few remaining participants with negative slopes
+
+```{r}
+models %>% 
+  filter(
+    ring != 1,
+    str_detect(feature, "orange"),
+    !(observer %in% neg_slopes2$observer)) -> models
+
+d2 %>% 
+  filter(
+    ring != 1,
+    str_detect(feature, "orange"),
+    !(observer %in% neg_slopes2$observer)) -> d2
+
+```
+
+Now make predictions
+
+```{r}
+rm(Dp)
+rm(model1, model2)
+
+make_pred <- function(drw) {
+  
+  draw  <- unique(models$.draw)[drw]
+  
+  mod <- filter(models, .draw == draw)
+  
+  full_join(mod, d2, by = c("observer", "ring", "feature"),
+            relationship = "many-to-many") %>%
+    select(.draw, method, observer, ring, feature, lnd, a, b, ndt, sd, rt) %>%
+    mutate(p_mu_rt = exp(ndt) + exp(a + b*lnd),
+           loglik = dshifted_lnorm(rt, meanlog = log(p_mu_rt), sdlog = sd, shift = ndt, log = T),
+           abs_err = abs(rt-p_mu_rt)) %>%
+    arrange(method, observer, ring, feature, lnd)  %>% 
+  select(.draw, method, observer, ring, feature, lnd, rt, p_mu_rt, loglik, abs_err)-> dp
+  
+  return(dp)
+
+}
+
+dp <- map_df(1:ndraws, make_pred)
+
+```
+
+
+```{r}
+
+
+### Absolute Error
+
+
+dp %>% 
+  filter(lnd > 0) %>%
+  group_by(.draw,lnd, ring, method) %>%
+  summarise(mean_err = mean(abs_err), .groups = "drop") %>%
+  pivot_wider(names_from = "method", values_from = "mean_err") %>%
+  pivot_longer(c(D_collinear, D_best_feature, D_orth_contrast), 
+               names_to = "method", values_to = "Dp") %>%
+  mutate(rel_mean_abs_err = Dp/D) -> Derr
+
+Derr %>% ungroup() %>%
+  group_by(ring, method) %>% 
+  median_hdci(rel_mean_abs_err, .width = 0.97) %>%
+  knitr::kable() %>%
+  kable_styling() 
+
+Derr %>% ggplot(aes(lnd, rel_mean_abs_err, fill = method)) +
+  stat_lineribbon(alpha = 0.2, .width = 0.97) +
+  facet_grid(ring~method) +
+  geom_hline(yintercept = 1, linetype = 2) +
+  ggthemes::scale_color_ptol() +
+    coord_cartesian(ylim = c(0.99, 1.1))
+
+```
+
+
