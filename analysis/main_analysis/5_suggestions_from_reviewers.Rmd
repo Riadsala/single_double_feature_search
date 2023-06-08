@@ -167,35 +167,53 @@ First we define a little function to calculate correlations within feature from 
 get_cor_matrix <- function(df, key) {
   
   df %>% 
-    pivot_wider(names_from = "block", values_from = "D") %>%
+    #pivot_wider(names_from = "block", values_from = "D") %>%
     select(-observer) %>%
     correlate() %>%
-    mutate(.draw = key$.draw,
-           feature = key$feature)-> dout
+    mutate(.draw = key$.draw)-> dout
   
   return(dout)
 }
 ```
 
 
-Now for each feature x sample, compute the correlations
+Now for each feature x block x sample, compute the correlations
 
 ```{r}
 
 samples %>% 
- group_by(.draw, feature) %>%
+  unite(block_feature, block, feature) %>%
+  pivot_wider(names_from = block_feature, values_from = D) %>%
+  group_by(.draw) %>%
   group_map(get_cor_matrix) %>%
   bind_rows -> dc
+```
 
-dc %>% mutate(block = parse_number(term)) %>%
-  select(.draw, starts_with("block"), feature) %>%
-  pivot_longer(-c(.draw, block, feature), names_to = "block2", values_to = "r") %>%
-  group_by(feature, block, block2) %>%
+And plot to make sense of this madness!
+
+```{r}
+dc %>% 
+  rename(block_feature1 = "term") %>%
+  pivot_longer(-c(.draw, block_feature1), names_to = "block_feature2", values_to = "r") %>%
+  separate(block_feature1, into = c("blockA", "featureA")) %>%
+  separate(block_feature2, into = c("blockB", "featureB")) %>%
+  mutate(blockA = parse_number(blockA),
+         blockB = parse_number(blockB)) %>%
+  select(.draw, blockA, featureA, blockB, featureB, r) -> dc
+
+
+dc %>%
+  filter(blockA == 1) %>%
+  group_by(featureA, featureB, blockB) %>%
   median_hdci(r, .width = c(.53, .97)) %>%
-  filter(block2 == "block1") %>%
-  ggplot(aes(block, ymin = .lower, y = r, ymax = .upper, fill = feature, group = interation(feature, .width))) + 
+  rename(feature = "featureA") %>%
+  ggplot(aes(blockB, ymin = .lower, y = r, ymax = .upper, 
+             group = interaction( .width))) + 
+  geom_path() + 
   geom_hline(yintercept = 0, linetype = 2) + 
   geom_ribbon(alpha = 0.125) + 
+  facet_grid(feature~featureB)  +
+  scale_x_continuous("block") +
   scale_y_continuous("correlation (r) with block 1")
 ```
 
