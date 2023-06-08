@@ -822,11 +822,6 @@ d2 %&gt;%
     str_detect(feature, &quot;orange&quot;),
     !(observer %in% neg_slopes2$observer)) -&gt; d2</code></pre>
 <p>Now make predictions</p>
-<pre class="r"><code>rm(Dp)</code></pre>
-<pre><code>## Warning in rm(Dp): object &#39;Dp&#39; not found</code></pre>
-<pre class="r"><code>rm(model1, model2)</code></pre>
-<pre><code>## Warning in rm(model1, model2): object &#39;model1&#39; not found</code></pre>
-<pre><code>## Warning in rm(model1, model2): object &#39;model2&#39; not found</code></pre>
 <pre class="r"><code>make_pred &lt;- function(drw) {
   
   draw  &lt;- unique(models$.draw)[drw]

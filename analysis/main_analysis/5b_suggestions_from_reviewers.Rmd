@@ -161,9 +161,6 @@ d2 %>%
 Now make predictions
 
 ```{r}
-rm(Dp)
-rm(model1, model2)
-
 make_pred <- function(drw) {
   
   draw  <- unique(models$.draw)[drw]
