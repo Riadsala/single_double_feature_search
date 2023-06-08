@@ -124,7 +124,7 @@ rm(m)
 
 # read in model
 m <- readRDS("exp1_block.model")
-summary(m)
+
 ```
 
 Extract slopes per person x feature x block
@@ -132,19 +132,71 @@ Extract slopes per person x feature x block
 ```{r}
 # extract the slopes per person per feature per block
 samples <- gather_draws(m, `[rb]_.*`, regex=T, ndraws = 100)
-    
-   samples_ff <- filter(samples, str_detect(.variable, "b_"))
-   
-   samples_rf <- filter(samples, str_detect(.variable, "r_")) %>% 
-     select(-.chain, -.iteration) %>% 
-     filter(str_detect(.variable, ":lnd")) %>%
-     rename(feature = ".variable", rD = ".value") %>%
-     separate(feature, into = c("observer", "feature"), ",") %>%
-     mutate(observer = parse_number(observer),
-            feature = str_remove(feature, "feature"),
-            feature = str_remove(feature, ":lnd"),
-            feature = str_remove(feature, "]")) 
 
+samples_ff <- samples %>%
+  filter(str_detect(.variable, "b_")) %>%
+  filter(str_detect(.variable, ":lnd")) %>%
+  separate(.variable, c("block", "feature", "lnd"),  ":") %>%
+  select(-lnd, -.chain, -.iteration) %>%
+  mutate(block = str_remove(block, "b_"),
+         feature = str_remove(feature, "feature")) %>%
+  rename(D = ".value")
+
+samples_rf <- filter(samples, str_detect(.variable, "r_")) %>% 
+  select(-.chain, -.iteration) %>% 
+  filter(str_detect(.variable, ":lnd")) %>%
+  rename(feature = ".variable", rD = ".value") %>%
+  separate(feature, into = c("observer", "feature"), ",") %>%
+  mutate(observer = parse_number(observer),
+         feature = str_remove(feature, "feature"),
+         feature = str_remove(feature, ":lnd"),
+         feature = str_remove(feature, "]")) %>%
+  separate(feature, c("block", "feature"), ":") 
+
+full_join(samples_ff, samples_rf) %>%
+      mutate(D = D + rD) %>%
+      select(-rD) -> samples
+```
+
+## Computer correlation per sample
+
+First we define a little function to calculate correlations within feature from one block to the next:
+
+```{r}
+
+get_cor_matrix <- function(df, key) {
+  
+  df %>% 
+    pivot_wider(names_from = "block", values_from = "D") %>%
+    select(-observer) %>%
+    correlate() %>%
+    mutate(.draw = key$.draw,
+           feature = key$feature)-> dout
+  
+  return(dout)
+}
+```
+
+
+Now for each feature x sample, compute the correlations
+
+```{r}
+
+samples %>% 
+ group_by(.draw, feature) %>%
+  group_map(get_cor_matrix) %>%
+  bind_rows -> dc
+
+dc %>% mutate(block = parse_number(term)) %>%
+  select(.draw, starts_with("block"), feature) %>%
+  pivot_longer(-c(.draw, block, feature), names_to = "block2", values_to = "r") %>%
+  group_by(feature, block, block2) %>%
+  median_hdci(r, .width = c(.53, .97)) %>%
+  filter(block2 == "block1") %>%
+  ggplot(aes(block, ymin = .lower, y = r, ymax = .upper, fill = feature, group = interation(feature, .width))) + 
+  geom_hline(yintercept = 0, linetype = 2) + 
+  geom_ribbon(alpha = 0.125) + 
+  scale_y_continuous("correlation (r) with block 1")
 ```
 
 
