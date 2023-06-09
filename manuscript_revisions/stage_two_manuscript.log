@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  9 JUN 2023 10:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  9 JUN 2023 14:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -711,13 +711,13 @@ Package pdftex.def Info: ../plots/ring_single_feature.pdf  used on input line 4
 08.
 (pdftex.def)             Requested size: 390.0pt x 167.14601pt.
  [22 <../plots/single_feature_correlations.pdf>] [23 <../plots/ring_single_feat
-ure.pdf>] [24] [25]
+ure.pdf>] [24] [25] [26]
 Overfull \hbox (5.98071pt too wide) in paragraph at lines 462--463
 []\OT1/ptm/m/n/12 Another pos-si-bil-ity is that be-cause some par-tic-i-pants 
 had neg-a-tive search slopes,
  []
 
-[26]
+
 Overfull \hbox (4.8892pt too wide) in paragraph at lines 468--469
 []\OT1/ptm/m/n/12 Our (planned) ex-ploratory anal-y-sis of the in-di-vid-ual di
 f-fer-ences in search slopes
@@ -764,7 +764,7 @@ AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 1/urw/times/utmb8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on stage_two_manuscript.pdf (36 pages, 1032114 bytes).
+Output written on stage_two_manuscript.pdf (36 pages, 1032461 bytes).
 PDF statistics:
  942 PDF objects out of 1000 (max. 8388607)
  180 named destinations out of 1000 (max. 500000)
