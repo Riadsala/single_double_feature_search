@@ -27,7 +27,7 @@ library(knitr)
 library(kableExtra)
 ```
 
-Here we present the first of two additional analyses that were suggested during the Stage Two peer review process. We thank the reviewers for their suggestions. 
+Here we present two additional analyses that were suggested during the Stage Two peer review process. We thank the reviewers for their suggestions. 
 
 
 ```{r}
@@ -230,3 +230,175 @@ These results suggest that there remains a fairly high correlation across blocks
 
 Overall, these post hoc results suggest that our results cannot simply be explained by the block structure of the experiment, and that we really do see better correlations for features of the same class, though we acknowledge that to test this hypothesis stringently we would need to design the experiment differently.
 
+# Removing small/negative slopes
+
+Both reviewers suggested that it would be interesting to check whether removing participants with small/negative search slopes would change the predictions of which model best fit the data.
+
+To be as conservative as possible, we tested this by removing the purple and pink conditions entirely, as well as all data from the inner ring. We then remove all people with negative slopes.
+
+## Setting up the data
+
+First, we read in the data and models again: 
+```{r}
+source("../scripts/pred_rt_functions.R")
+source("1_pre_process_data.R")
+
+d1 %>% mutate(observer = as.numeric(observer)) %>%
+  select(-nd) -> d1
+
+d2 %>% mutate(observer = as.numeric(observer)) %>%
+  select(-nd) -> d2
+
+d2 %>% unite(feature, feature1, feature2) -> d2
+
+m1 <- readRDS("exp1_ring.model") 
+
+m2 <- readRDS("exp2_ring.model") 
+```
+
+Next, we extract the slopes.
+
+```{r}
+samples1 <- get_slopes(m1, rings = TRUE, fixed = FALSE)
+```
+
+We then check the probability that the slope is negative. We can see that most of people with negative slopes are in ring 1, and the pink and purple conditions.
+
+```{r, message= FALSE}
+samples1 %>% group_by(feature, ring, observer) %>%
+  summarise(prob_neg = mean(D<0), .groups = "drop") %>%
+  filter(prob_neg > 0.0) -> neg_slopes
+
+neg_slopes %>% group_by(feature, ring) %>%
+  summarise(n = n()) %>%
+  knitr::kable()
+```
+
+Thus, we decided to remove the purple and pink conditions entirely, as well as the inner ring.
+
+If we remove all people with a negative slope, we then have just three people to remove to avoid having any negative slopes. 
+
+```{r}
+
+neg_slopes %>% 
+  filter(!(feature %in% c("pink", "purple")), ring>1) -> neg_slopes2
+
+neg_slopes2
+```
+
+## Predicting reaction times
+
+We now repeat the predictions for individuals (code copied from `4_planned_explorations`).
+
+
+```{r}
+ndraws <- 100
+
+source("../scripts/pred_rt_functions.R")
+
+model1 <- get_rt_model_ring_obs(m1)
+rm(m1)
+model2 <- get_rt_model_ring_obs(m2)
+rm(m2)
+
+
+
+# convert in order to get D predictions for m2
+full_join(
+  model1 %>% filter(feature %in% c("orange", "pink", "purple")) %>%
+    rename(feature1 = "feature", D1 = "D"),
+  model1 %>% filter(feature %in% c("circle", "diamond", "triangle")) %>%
+    rename(feature2 = "feature", D2 = "D"),
+  by = c(".draw", "observer", "ring", "a", "ndt", "sd")) %>%
+  unite(feature, feature1, feature2) %>%
+  mutate(D_collinear = 1/((1/D1) + (1/D2)),
+         D_best_feature = pmin(D1, D2),
+         D_orth_contrast =  1/sqrt(1/(D1^2) + (1/D2^2))) %>%
+  select(.draw, observer, ring, feature, D_collinear, D_best_feature, D_orth_contrast) -> Dp
+
+# merge everything
+full_join(model2, Dp, 
+          by = c(".draw", "observer", "ring", "feature")) %>%
+  pivot_longer(c(D, 
+                 D_collinear, D_best_feature, D_orth_contrast), 
+               names_to = "method", values_to = "b") -> models
+
+rm(Dp)
+rm(model1, model2)
+
+
+```
+
+Now we remove ring 1, purple, pink and the few remaining participants with negative slopes.
+
+```{r}
+models %>% 
+  filter(
+    ring != 1,
+    str_detect(feature, "orange"),
+    !(observer %in% neg_slopes2$observer)) -> models
+
+d2 %>% 
+  filter(
+    ring != 1,
+    str_detect(feature, "orange"),
+    !(observer %in% neg_slopes2$observer)) -> d2
+
+```
+
+Now we make predictions.
+
+```{r}
+make_pred <- function(drw) {
+  
+  draw  <- unique(models$.draw)[drw]
+  
+  mod <- filter(models, .draw == draw)
+  
+  full_join(mod, d2, by = c("observer", "ring", "feature"),
+            relationship = "many-to-many") %>%
+    select(.draw, method, observer, ring, feature, lnd, a, b, ndt, sd, rt) %>%
+    mutate(p_mu_rt = exp(ndt) + exp(a + b*lnd),
+           loglik = dshifted_lnorm(rt, meanlog = log(p_mu_rt), sdlog = sd, shift = ndt, log = T),
+           abs_err = abs(rt-p_mu_rt)) %>%
+    arrange(method, observer, ring, feature, lnd)  %>% 
+  select(.draw, method, observer, ring, feature, lnd, rt, p_mu_rt, loglik, abs_err)-> dp
+  
+  return(dp)
+
+}
+
+dp <- map_df(1:ndraws, make_pred)
+
+```
+
+
+## Absolute error
+
+```{r}
+
+dp %>% 
+  filter(lnd > 0) %>%
+  group_by(.draw,lnd, ring, method) %>%
+  summarise(mean_err = mean(abs_err), .groups = "drop") %>%
+  pivot_wider(names_from = "method", values_from = "mean_err") %>%
+  pivot_longer(c(D_collinear, D_best_feature, D_orth_contrast), 
+               names_to = "method", values_to = "Dp") %>%
+  mutate(rel_mean_abs_err = Dp/D) -> Derr
+
+Derr %>% ungroup() %>%
+  group_by(ring, method) %>% 
+  median_hdci(rel_mean_abs_err, .width = 0.97) %>%
+  knitr::kable() %>%
+  kable_styling() 
+
+Derr %>% ggplot(aes(lnd, rel_mean_abs_err, fill = method)) +
+  stat_lineribbon(alpha = 0.2, .width = 0.97) +
+  facet_grid(ring~method) +
+  geom_hline(yintercept = 1, linetype = 2) +
+  ggthemes::scale_color_ptol() +
+    coord_cartesian(ylim = c(0.99, 1.1))
+
+```
+
+The removal of negative slopes does indeed help the collinear contrast model: in particular, the median HDCI does now look much more sensible. However, the orthogonal contrast model still seems to be the best overall model even when applying these strict exclusion criteria.
