@@ -1,5 +1,5 @@
 ---
-title: "Supplementary Materials: SUggestions from Reviewers"
+title: "Supplementary Materials: Suggestions from Reviewers"
 author: "Alasdair D.F. Clarke and Anna E. Hughes"
 date: "2023-03-24"
 output: bookdown::html_document2
@@ -27,6 +27,9 @@ library(knitr)
 library(kableExtra)
 ```
 
+Here we present the first of two additional analyses that were suggested during the Stage Two peer review process. We thank the reviewers for their suggestions. 
+
+
 ```{r}
 # set ggplot2 theme
 theme_set(ggthemes::theme_tufte())
@@ -46,88 +49,96 @@ set.seed(100320021)
 ```
 
 
-Here we present two additional analysis that were suggested during the Stage Two peer review process. We thank the reviewers for their suggestions. 
-
 # Effect of block on correlations
 
-In `4_Planned_Explorations` we reported that \ldots. 
+In `4_Planned_Explorations` we reported that there were correlations *within* feature classes: for example, for $D_c$, pink correlates well with orange and purple, but not with shape features (i.e. diamond, triangle and circle).
 
-During peer review it was suggested that we could partially disentangle contributions of feature type and block from one another by looking at how the correlations change within sub-blocks. <EXPAND>. 
+During peer review it was suggested that we could partially disentangle contributions of feature type and block from one another by looking at how the correlations change within sub-blocks. 
 
-If the correlation results are primarily being driven by block, then we could expect to see a decreases in the correlation over sub-blocks. Whereas if it is down to the difference in colour v shape features.
+One challenge with this approach is that our experiment featured a block design: shape-only trials were always presented in one block only (at a random position within the experiment). Colour-only trials were then spread across the four other blocks of the experiment. We suggest that the lack of correlation between colour and feature might be because there are block effects: knowing the search slope for a feature in the first block allows us to predict the search slopes of the other features in that block, but tells us nothing of the observer's behaviour in the second block. 
 
+To test this, we can look (for the colour-only trials) whether the correlations vary between block. If the correlation results are primarily being driven by block, then we could expect to see a decrease in the correlation over sub-blocks i.e. there are high correlations within a block, that then decrease (perhaps increasingly so as you move further away from e.g. block one). If this is not the case, it would suggest that block *per se* is not having a strong effect on the correlations, perhaps suggesting there is a real feature based effect. Of course, a stronger test of this would be to change the design of the experiment so that all trials are randomly interleaved, or all blocked.
 
+## Fitting the model
+
+We're going to refit the model (single colour feature only), this time including block info. 
 
 ```{r cache=TRUE, warning = FALSE}
 ## Import and Remove Outliers 
 source("1_pre_process_data.R")
 
 # remove feature = circle, diamond, triangle (these are all expt 1b, which is blocked)
-# expt 1b is in a different block for each person so each person will have one block missing at random, but I THINK this will be okay
+# expt 1b is in a different block for each person so each person will have one block missing at random.
 d1 <- d1 %>% 
   mutate(block = as_factor(block)) %>%
   filter(feature == "pink" | feature == "purple" | feature == "orange")
 ```
 
-We're going to refit the model (single feature only), this time including block info. 
+The code below does not run by default (as it is slow). Please set 'eval = TRUE' in the below code snippet if you would like to run the block model.
 
-```{r}
+```{r, eval = FALSE}
 
 n_chains = 4
 n_itr = 5000
 
-# fit_model <- function(d, fam, prior, formula, samp_prior = "no") { 
-#   
-#   # wrapper function for running models
-#   # this way, easier to make sure all models are using the same settings!
-#   
-#   m <- brm(
-#     formula,
-#     data = d,
-#     family = brmsfamily(fam),
-#     prior = prior,
-#     chains = n_chains,
-#     iter = n_itr,
-#     init = my_inits,
-#     save_pars = save_pars(all=TRUE),
-#     silent = TRUE,
-#     backend = 'cmdstanr',
-#     control = list(adapt_delta = 0.9),
-#     sample_prior = samp_prior)
-#   
-#   return(m)
-# }
-# 
-# 
-# my_f <- brms::bf(rt ~ 0 + block + block:feature:lnd + (0 + block + feature:lnd|observer),
-#                  ndt ~ 1 + (1|observer))
-# 
-# my_inits <- list(list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10))
-# 
-# my_prior <- c(
-#   # prior_string("normal(-0.5, 0.3)", class = "Intercept"),
-#   prior_string("normal(0, 0.2)", class = "b"),
-#   prior_string("normal(-1, 0.2)", class = "b", coef = "block1"),
-#   prior_string("normal(-1, 0.2)", class = "b", coef = "block2"),
-#   prior_string("normal(-1, 0.2)", class = "b", coef = "block3"),
-#   prior_string("normal(-1, 0.2)", class = "b", coef = "block4"),
-#   prior_string("normal(-1, 0.2)", class = "b", coef = "block5"),
-#   prior_string("normal(-1, 0.5)", class = "Intercept", dpar = "ndt" ),
-#   prior_string("cauchy(0, 0.4)", class = "sigma"),
-#   prior_string("cauchy(0, 0.05)", class = "sd"),
-#   prior_string("cauchy(0, 0.05)", class = "sd", dpar = "ndt"))
-# 
-# # now run model for single feature data
-# m <- fit_model(d1, "shifted_lognormal", my_prior, my_f)
-# saveRDS(m, "exp1_block.model")
+fit_model <- function(d, fam, prior, formula, samp_prior = "no") { 
+   
+   # wrapper function for running models
+   # this way, easier to make sure all models are using the same settings!
+   
+   m <- brm(
+     formula,
+     data = d,
+     family = brmsfamily(fam),
+     prior = prior,
+     chains = n_chains,
+     iter = n_itr,
+     init = my_inits,
+     save_pars = save_pars(all=TRUE),
+     silent = TRUE,
+     backend = 'cmdstanr',
+     control = list(adapt_delta = 0.9),
+     sample_prior = samp_prior)
+   
+   return(m)
+}
+ 
+ 
+my_f <- brms::bf(rt ~ 0 + block + block:feature:lnd + (0 + block + feature:lnd|observer),
+                  ndt ~ 1 + (1|observer))
+ 
+my_inits <- list(list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10), list(Intercept_ndt = -10))
+ 
+my_prior <- c(
+  # prior_string("normal(-0.5, 0.3)", class = "Intercept"),
+   prior_string("normal(0, 0.2)", class = "b"),
+   prior_string("normal(-1, 0.2)", class = "b", coef = "block1"),
+   prior_string("normal(-1, 0.2)", class = "b", coef = "block2"),
+   prior_string("normal(-1, 0.2)", class = "b", coef = "block3"),
+   prior_string("normal(-1, 0.2)", class = "b", coef = "block4"),
+   prior_string("normal(-1, 0.2)", class = "b", coef = "block5"),
+   prior_string("normal(-1, 0.5)", class = "Intercept", dpar = "ndt" ),
+   prior_string("cauchy(0, 0.4)", class = "sigma"),
+   prior_string("cauchy(0, 0.05)", class = "sd"),
+   prior_string("cauchy(0, 0.05)", class = "sd", dpar = "ndt"))
+ 
+# now run model for single feature data
+m <- fit_model(d1, "shifted_lognormal", my_prior, my_f)
+saveRDS(m, "exp1_block.model")
 rm(m)
+
+```
+
+The code snippet below assumes that you have either run the model yourself (see code chunk above) or downloaded our pre-run models.
+
+```{r}
 
 # read in model
 m <- readRDS("exp1_block.model")
 
 ```
 
-Extract slopes per person x feature x block
+We must first extract the slopes per person x feature x block.
 
 ```{r}
 # extract the slopes per person per feature per block
@@ -167,7 +178,6 @@ First we define a little function to calculate correlations within feature from 
 get_cor_matrix <- function(df, key) {
   
   df %>% 
-    #pivot_wider(names_from = "block", values_from = "D") %>%
     select(-observer) %>%
     correlate() %>%
     mutate(.draw = key$.draw)-> dout
@@ -176,10 +186,9 @@ get_cor_matrix <- function(df, key) {
 }
 ```
 
+Now for each feature x block x sample, we compute the correlations.
 
-Now for each feature x block x sample, compute the correlations
-
-```{r}
+```{r, message = FALSE}
 
 samples %>% 
   unite(block_feature, block, feature) %>%
@@ -189,9 +198,9 @@ samples %>%
   bind_rows -> dc
 ```
 
-And plot to make sense of this madness!
+We then make a plot.
 
-```{r}
+```{r, warning = FALSE}
 dc %>% 
   rename(block_feature1 = "term") %>%
   pivot_longer(-c(.draw, block_feature1), names_to = "block_feature2", values_to = "r") %>%
@@ -217,5 +226,7 @@ dc %>%
   scale_y_continuous("correlation (r) with block 1")
 ```
 
+These results suggest that there remains a fairly high correlation across blocks: for example, in the top left plot, we can see that for orange-orange correlations, the correlation ($r$) with block 1 remains fairly steady at around $r = 0.5$. This remains true even across different colours (e.g. orange-purple), although perhaps the purple correlations are slightly weaker overall, with the 97% HDCI containing $r = 0$ at some points. We note that we have relatively little data for this type of analysis though, weakening our power. 
 
+Overall, these post hoc results suggest that our results cannot simply be explained by the block structure of the experiment, and that we really do see better correlations for features of the same class, though we acknowledge that to test this hypothesis stringently we would need to design the experiment differently.
 
