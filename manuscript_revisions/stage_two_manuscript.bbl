@@ -1,4 +1,4 @@
-\begin{thebibliography}{67}
+\begin{thebibliography}{68}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -403,6 +403,12 @@ Jeremy~M Wolfe.
 \newblock Approaches to visual search: Feature integration theory and guided
   search.
 \newblock \emph{Oxford handbook of attention}, pages 11--55, 2014.
+
+\bibitem[Wolfe(2021)]{wolfe2021guided}
+Jeremy~M Wolfe.
+\newblock Guided search 6.0: An updated model of visual search.
+\newblock \emph{Psychonomic Bulletin \& Review}, 28\penalty0 (4):\penalty0
+  1060--1092, 2021.
 
 \bibitem[Wolfe and Van~Wert(2010)]{wolfe2010varying}
 Jeremy~M Wolfe and Michael~J Van~Wert.
