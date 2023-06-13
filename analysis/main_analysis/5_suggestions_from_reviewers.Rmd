@@ -1,7 +1,7 @@
 ---
 title: "Supplementary Materials: Suggestions from Reviewers"
 author: "Alasdair D.F. Clarke and Anna E. Hughes"
-date: "2023-03-24"
+date: "2023-06-13"
 output: bookdown::html_document2
 ---
 
@@ -74,7 +74,7 @@ d1 <- d1 %>%
   filter(feature == "pink" | feature == "purple" | feature == "orange")
 ```
 
-The code below does not run by default (as it is slow). Please set 'eval = TRUE' in the below code snippet if you would like to run the block model.
+The code below does not run by default (as it is slow). Please set $eval = TRUE$ in the below code snippet if you would like to run the block model.
 
 ```{r, eval = FALSE}
 
@@ -140,7 +140,7 @@ m <- readRDS("exp1_block.model")
 
 We must first extract the slopes per person x feature x block.
 
-```{r}
+```{r, message = FALSE}
 # extract the slopes per person per feature per block
 samples <- gather_draws(m, `[rb]_.*`, regex=T, ndraws = 100)
 
@@ -200,7 +200,7 @@ samples %>%
 
 We then make a plot.
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, fig.cap = "Correlations across blocks for each colour-colour pairing in Experiment 1."}
 dc %>% 
   rename(block_feature1 = "term") %>%
   pivot_longer(-c(.draw, block_feature1), names_to = "block_feature2", values_to = "r") %>%
@@ -226,7 +226,7 @@ dc %>%
   scale_y_continuous("correlation (r) with block 1")
 ```
 
-These results suggest that there remains a fairly high correlation across blocks: for example, in the top left plot, we can see that for orange-orange correlations, the correlation ($r$) with block 1 remains fairly steady at around $r = 0.5$. This remains true even across different colours (e.g. orange-purple), although perhaps the purple correlations are slightly weaker overall, with the 97% HDCI containing $r = 0$ at some points. We note that we have relatively little data for this type of analysis though, weakening our power. 
+The results shown in Figure 2.1 suggest that there remains a fairly high correlation across blocks: for example, in the top left plot, we can see that for orange-orange correlations, the correlation ($r$) with block 1 remains fairly steady at around $r = 0.5$. This remains true even across different colours (e.g. orange-purple), although perhaps the purple correlations are slightly weaker overall, with the 97% HDCI containing $r = 0$ at some points. We note that we have relatively little data for this type of analysis though, weakening our power. 
 
 Overall, these post hoc results suggest that our results cannot simply be explained by the block structure of the experiment, and that we really do see better correlations for features of the same class, though we acknowledge that to test this hypothesis stringently we would need to design the experiment differently.
 
@@ -271,7 +271,8 @@ samples1 %>% group_by(feature, ring, observer) %>%
 
 neg_slopes %>% group_by(feature, ring) %>%
   summarise(n = n()) %>%
-  knitr::kable()
+  knitr::kable()  %>%
+  kable_styling() 
 ```
 
 Thus, we decided to remove the purple and pink conditions entirely, as well as the inner ring.
@@ -283,7 +284,9 @@ If we remove all people with a negative slope, we then have just three people to
 neg_slopes %>% 
   filter(!(feature %in% c("pink", "purple")), ring>1) -> neg_slopes2
 
-neg_slopes2
+neg_slopes2 %>%
+  knitr::kable()  %>%
+  kable_styling() 
 ```
 
 ## Predicting reaction times
@@ -375,7 +378,9 @@ dp <- map_df(1:ndraws, make_pred)
 
 ## Absolute error
 
-```{r}
+Finally, we calculate the absolute error, in order to analyse which model gives the best reaction time predictions.
+
+```{r, fig.cap = "Comparing which model does the best job of predicting reaction times: log number of distractors plotted againt the absolute error of the model, grouped by ring."}
 
 dp %>% 
   filter(lnd > 0) %>%
@@ -401,4 +406,4 @@ Derr %>% ggplot(aes(lnd, rel_mean_abs_err, fill = method)) +
 
 ```
 
-The removal of negative slopes does indeed help the collinear contrast model: in particular, the median HDCI does now look much more sensible. However, the orthogonal contrast model still seems to be the best overall model even when applying these strict exclusion criteria.
+Figure 3.1 shows that the removal of negative slopes does indeed help the collinear contrast model: in particular, the median HDCI does now look much more sensible. However, the orthogonal contrast model still seems to be the best overall model even when applying these strict exclusion criteria.
