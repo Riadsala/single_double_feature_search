@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  13 JUN 2023 14:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  13 JUN 2023 17:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -753,7 +753,7 @@ Here is how much of TeX's memory you used:
  32664 multiletter control sequences out of 15000+600000
  510375 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,10n,77p,1944b,690s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,10n,77p,1944b,688s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.e
 nc}<C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmex10.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
@@ -767,7 +767,7 @@ AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 1/urw/times/utmb8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on stage_two_manuscript.pdf (37 pages, 1037247 bytes).
+Output written on stage_two_manuscript.pdf (37 pages, 1037420 bytes).
 PDF statistics:
  963 PDF objects out of 1000 (max. 8388607)
  183 named destinations out of 1000 (max. 500000)
