@@ -408,7 +408,7 @@ ndt_int_sd <- fixef(m1)["ndt_Intercept", 2]
 
 ```{r hypothesis-4-plot, cache=TRUE, message = FALSE, warning = FALSE, echo = FALSE, fig.height = 5, , fig.cap = "Predicted RTs for our data, using orthogonal contrast combination.", cache.lazy = FALSE} 
 
-d2 <- d2 %>% unite(feature, feature1, feature2) # is this line of code redundant?
+d2 <- d2 %>% unite(feature, feature1, feature2) 
 
 m_col <- compute_rt_predictions(slopes, "collinear") 
 m_bfe <- compute_rt_predictions(slopes, "best feature") 

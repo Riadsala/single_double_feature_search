@@ -169,7 +169,7 @@ full_join(samples_ff, samples_rf) %>%
       select(-rD) -> samples
 ```
 
-## Computer correlation per sample
+## Compute correlation per sample
 
 First we define a little function to calculate correlations within feature from one block to the next:
 
