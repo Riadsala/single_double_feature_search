@@ -461,7 +461,22 @@ Despite these previous findings, the use of linear search slopes is still preval
 
 In \cite{buetti2019predicting}, the collinear contrast integration model was found to provide the best fit for their data, providing a more precise prediction than the orthogonal contrast combination model (as measured by both the closeness of the slope of the regression line to one, and the mean average prediction error). Accepting this model of how the combination process works has theoretical implications e.g. it implies that colour and shape contrasts independently contribute to attentional guidance. However, we did not find strong support for this model, instead finding that the orthogonal contrast combination model provides the best fit with the data.
 
-One possibility is that our small modifications to the experimental stimuli changed the strategy that participants used. However, this seems unlikely given that we only made changes to the colour of the stimuli, a manipulation that \cite{buetti2019predicting} also used, with no changes to their overall conclusions. In addition, our reanalysis of the original \cite{buetti2019predicting} data using our new methods also suggested that the orthogonal contrast model was best supported.  Thus, we suggest that the choice of modelling distribution (e.g. shifted-lognormal v.s. lognormal) affects the conclusions drawn, and thus we should aim to use the models that best align with the data in order to better understand the theoretical implications of our findings.
+One possibility is that our small modifications to the experimental stimuli changed the strategy that participants used. However, this seems unlikely given that we only made changes to the colour of the stimuli (see Table \ref{tab:colours}), a manipulation that \cite{buetti2019predicting} also used, with no changes to their overall conclusions, although it is of course possible that different colour combinations may lead to (for example) different relative saliences, which could change the combination method used by the participant. However, our reanalysis of the original \cite{buetti2019predicting} data using our new methods also suggested that the orthogonal contrast model was best supported. Thus, we suggest that the choice of modelling distribution (e.g. shifted-lognormal v.s. lognormal) affects the conclusions drawn, and thus we should aim to use the models that best align with the data in order to better understand the theoretical implications of our findings.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|ccc|ccc|ccc} 
+colour & L & a & b \\
+\hline
+orange & 66.7 & 30.5 & 86.5 \\
+purple & 24.6 & 2.8 & -17.5\\ 
+pink & 60.2 & 44.2 & -44.5 \\
+red & 52.2 & 78.8 & 76.2 
+ \end{tabular}
+\caption{CIELAB colour values used for targets and distractors in the experiment.}
+\label{tab:colours}
+
+\end{table}
 
 We also modified the way stimuli were presented in our experiment compared to \cite{buetti2019predicting}: rather than running each experiment separately, we (mostly) intermixed conditions. Models of attention presume that we hold a target template in our memory \citep{duncan1989visual}, and thus we ensured that the trials where the target was the white semicircle were blocked separately from the trials where the target was the red semicircle, to try to avoid conflict between maintaining multiple target templates in memory. However, it is possible participants used strategies such as shifting the target representation away from the distractors, or generally using relational strategies \citep{navalpakkam2007search, becker2010role, yu2023good}, which would be more challenging in our experimental set up where participants viewed a larger number of distractors compared to \cite{buetti2019predicting}. In relation to the models, this type of target representation shift could occur more strongly for one feature dimension (e.g. colour) than the other, perhaps changing the relationship between the contrasts for different feature dimensions and therefore the preferred model. If future work were to confirm this hypothesis, it would suggest that observers are able to cognitively shift their strategy based on the information available in the task.
 

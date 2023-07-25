@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  13 JUL 2023 15:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.9.22)  25 JUL 2023 11:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -720,25 +720,29 @@ Package pdftex.def Info: ../plots/ring_single_feature.pdf  used on input line 4
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[23 <../plots/ring_single_feature.pdf>] [24] [25] [26]
-Overfull \hbox (5.98071pt too wide) in paragraph at lines 468--469
+[23 <../plots/ring_single_feature.pdf>] [24] [25]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[26]
+Overfull \hbox (5.98071pt too wide) in paragraph at lines 483--484
 []\OT1/ptm/m/n/12 Another pos-si-bil-ity is that be-cause some par-tic-i-pants 
 had neg-a-tive search slopes,
  []
 
-
-Overfull \hbox (4.8892pt too wide) in paragraph at lines 474--475
+[27]
+Overfull \hbox (4.8892pt too wide) in paragraph at lines 489--490
 []\OT1/ptm/m/n/12 Our (planned) ex-ploratory anal-y-sis of the in-di-vid-ual di
 f-fer-ences in search slopes
  []
 
-[27] [28] [29]
-Underfull \hbox (badness 10000) in paragraph at lines 496--498
+[28] [29]
+Underfull \hbox (badness 10000) in paragraph at lines 511--513
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 498--500
+Underfull \hbox (badness 10000) in paragraph at lines 513--515
 
  []
 
@@ -753,13 +757,13 @@ Package rerunfilecheck Info: File `stage_two_manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: 2C0FA20ED0133CB26B9EED5E1A80045E;8035.
  ) 
 Here is how much of TeX's memory you used:
- 11663 strings out of 475389
- 186355 string characters out of 2774134
- 531435 words of memory out of 3000000
- 32665 multiletter control sequences out of 15000+600000
+ 11665 strings out of 475389
+ 186375 string characters out of 2774134
+ 531528 words of memory out of 3000000
+ 32666 multiletter control sequences out of 15000+600000
  510375 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,10n,77p,1944b,686s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,10n,77p,1944b,684s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.e
 nc}<C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmex10.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
@@ -773,9 +777,9 @@ AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 1/urw/times/utmb8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/urw/times/utmr8a.pfb><C:/Users/ah19679/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on stage_two_manuscript.pdf (37 pages, 1038536 bytes).
+Output written on stage_two_manuscript.pdf (37 pages, 1038876 bytes).
 PDF statistics:
  968 PDF objects out of 1000 (max. 8388607)
- 184 named destinations out of 1000 (max. 500000)
+ 185 named destinations out of 1000 (max. 500000)
  367 words of extra memory for PDF output out of 10000 (max. 10000000)
 
